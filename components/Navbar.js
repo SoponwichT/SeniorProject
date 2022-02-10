@@ -1,4 +1,6 @@
 import Link from "next/link";
+import SignIn from "./Login"
+import SignOut from "./Logout"
 
 const Navbar = () => {
   return (
@@ -10,6 +12,8 @@ const Navbar = () => {
         <Link href="/map"><a>Map</a></Link>
         <Link href="/myfarm"><a>My Farm</a></Link>
         <Link href="/notification"><a>Notification</a></Link>
+        <button onClick={SignIn}>Login</button>
+        <button onClick={SignOut}>Logout</button>
     </nav>
   );
 }
