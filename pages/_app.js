@@ -1,6 +1,8 @@
 import Layout from '../components/Layout'
 import '../styles/globals.css'
 import { initializeApp } from "firebase/app";
+import { ChakraProvider } from '@chakra-ui/react'
+
 
 function MyApp({ Component, pageProps }) {
 
@@ -17,9 +19,11 @@ function MyApp({ Component, pageProps }) {
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   return (
-    <Layout>
-      <Component {...pageProps} />
-    </Layout>
+    <ChakraProvider>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </ChakraProvider>
   )
 }
 
