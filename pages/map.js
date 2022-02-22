@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import GMap from '../components/GMap.js'
 
 const Map = () => {
     return (
@@ -8,8 +9,7 @@ const Map = () => {
                 <meta name="keywords" content="palmplanter" />
             </Head>
             <div>
-                <h1>Map</h1>
-                <p>This is map page</p>
+                <GMap/>
             </div>
         </>
     );

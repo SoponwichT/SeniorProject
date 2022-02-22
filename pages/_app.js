@@ -2,6 +2,7 @@ import Layout from '../components/Layout'
 import '../styles/globals.css'
 import { initializeApp } from "firebase/app";
 import { ChakraProvider } from '@chakra-ui/react'
+import AuthProvider from '../services/auth-provider';
 
 
 function MyApp({ Component, pageProps }) {
@@ -19,11 +20,13 @@ function MyApp({ Component, pageProps }) {
   // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   return (
-    <ChakraProvider>
-      <Layout>
-        <Component {...pageProps} />
-      </Layout>
-    </ChakraProvider>
+    <AuthProvider>
+      <ChakraProvider>
+        <Layout>
+          <Component {...pageProps} />
+        </Layout>
+      </ChakraProvider>
+    </AuthProvider>
   )
 }
 

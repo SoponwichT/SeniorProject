@@ -18,12 +18,15 @@ import Glogo from '../assets/glogo.png'
 import Image from "next/image"
 import Signinwithgoogle from '../lib/firebase/siginin-with-google'
 import Link from "next/link";
-import { useState,useRef } from 'react'
+import { useState, useRef, useContext } from 'react'
 import SignInWUsernamePassword, { SignInStatus } from '../lib/firebase/signin-with-email'
+import { AuthContext } from "../services/auth-provider";
 
 
 
 const SignIn = () => {
+    // TODO: add signinGoole
+    const { signinEmail } = useContext(AuthContext)
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("")
     const [loadingAlert, setLoadingAlert] = useState(false)
@@ -31,23 +34,25 @@ const SignIn = () => {
     const cancelRef = useRef()
     const submitSignIn = async (e) => {
         e.preventDefault();
-        const response = await SignInWUsernamePassword(email, password)
+        setLoadingStatus(0)
+        setLoadingAlert(true)
+        const response = await signinEmail(email, password)
         console.log(response);
-        if (response === SignInStatus.usererror){
+        if (response === SignInStatus.usererror) {
             setLoadingStatus(2)
             setLoadingAlert(true)
         }
-        else if (response === SignInStatus.wrongpwd){
+        else if (response === SignInStatus.wrongpwd) {
             setLoadingStatus(3)
             setLoadingAlert(true)
         }
         else {
-            setLoadingStatus(0)
-            setLoadingAlert(true)
+            setLoadingAlert(false)
+            window.location.href = '/';
         }
-        
-        
-        
+
+
+
     }
 
     return (
@@ -75,7 +80,7 @@ const SignIn = () => {
                     <div>
                         <p>Don't have an account?<Link href="/register"><a className='text-blue-500'> Register</a></Link></p>
                     </div>
-
+                    {/* TODO: replace with new siginGoogle */}
                     <button onClick={Signinwithgoogle} className="bg-white shadow-lg rounded-md w-full max-w-md my-2 py-2 flex justify-center items-center">
                         <div className='w-6 h-6 relative mr-2' ><Image layout='fill' src={Glogo} /></div>
                         <div>Sign in with Google</div></button>
@@ -95,7 +100,7 @@ const SignIn = () => {
 
                             </>
                         }
-                        {loadingStatus === 1 &&
+                        {/* {loadingStatus === 1 &&
 
                             <>
                                 <AlertDialogHeader>
@@ -110,7 +115,7 @@ const SignIn = () => {
 
                                 </AlertDialogFooter>
                             </>
-                        }
+                        } */}
                         {loadingStatus === 2 &&
                             <>
                                 <AlertDialogHeader>
