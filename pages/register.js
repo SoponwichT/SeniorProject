@@ -15,11 +15,15 @@ import {
     CircularProgress, CircularProgressLabel,
 } from '@chakra-ui/react'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useContext } from 'react'
 import RegisterWUsernamePassword, { RegisterStatus } from '../lib/firebase/register-w-username-password'
+import { AuthContext } from "../services/auth-provider";
 
 const Register = () => {
+    const { registerEmail } = useContext(AuthContext)
     const [email, setEmail] = useState("");
+    const [fname, setFname] = useState("")
+    const [lname, setLname] = useState("")
     const [password, setPassword] = useState("")
     const [cPassword, setCPassword] = useState("")
     const [loadingAlert, setLoadingAlert] = useState(false)
@@ -31,7 +35,8 @@ const Register = () => {
         if (password === cPassword) {
             setLoadingStatus(0)
             setLoadingAlert(true)
-            const response = await RegisterWUsernamePassword(email, password)
+            const response = await registerEmail(email, password, fname, lname)
+            console.log(response);
             if (response === RegisterStatus.success) {
                 setLoadingStatus(1)
             } else {
@@ -53,11 +58,11 @@ const Register = () => {
                     <form onSubmit={submitRegister} className='flex flex-col  gap-y-6 max-w-md'>
                         <FormControl isRequired>
                             <FormLabel htmlFor='first-name'>First name</FormLabel>
-                            <Input id='first-name' placeholder='First name' />
+                            <Input value={fname} onChange={(e) => setFname(e.target.value)} id='first-name' placeholder='First name' />
                         </FormControl>
                         <FormControl isRequired>
                             <FormLabel htmlFor='last-name'>Last name</FormLabel>
-                            <Input id='last-name' placeholder='Last name' />
+                            <Input value={lname} onChange={(e) => setLname(e.target.value)} id='last-name' placeholder='Last name' />
                         </FormControl>
                         <FormControl>
                             <FormLabel htmlFor='email'>Email</FormLabel>

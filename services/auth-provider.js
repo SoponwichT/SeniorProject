@@ -1,5 +1,8 @@
 import { useState, useEffect, createContext } from "react"
 import SignInWUsernamePassword, { SignInStatus } from "../lib/firebase/signin-with-email"
+import RegisterWUsernamePassword from "../lib/firebase/register-w-username-password"
+import Firestore from "../lib/firebase/firestore";
+import { RegisterStatus } from "../lib/firebase/register-w-username-password";
 
 export const AuthContext = createContext(null);
 
@@ -9,20 +12,44 @@ const isLoggedKey = "isLoggedIn"
 export default function AuthProvider({ children }) {
     const [name, setName] = useState("")
     const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const firestore = new Firestore()
 
     async function signinEmail(email, password) {
         try {
             const response = await SignInWUsernamePassword(email, password)
             console.log(response);
 
-            setName(response.email)
+            const user = await firestore.getUser(response.uid)
+
+            setName(user.fname)
             setIsLoggedIn(true)
-            localStorage.setItem(nameKey, response.email)
+            localStorage.setItem(nameKey, user.fname)
             localStorage.setItem(isLoggedKey, "true")
             return SignInStatus.success
         } catch (error) {
             return error
         }
+    }
+
+    async function registerEmail(email, password, fname, lname) {
+
+        try {
+            const response = await RegisterWUsernamePassword(email, password)
+            console.log(response);
+
+            const user = await firestore.addUser(response.uid, {
+                fname,
+                lname,
+                email
+            })
+
+            return RegisterStatus.success
+
+        } catch (error) {
+            console.log(error);
+            return RegisterStatus.sthWrong
+        }
+
     }
 
     // TODO: async function signinGoogle(email, password) then change to Signinwithgoogle
@@ -51,6 +78,7 @@ export default function AuthProvider({ children }) {
         name,
         isLoggedIn,
         logout,
+        registerEmail
         // TODO: add fuction recently create
     }
 
