@@ -58,8 +58,6 @@ export default function AuthProvider({ children }) {
             const response = await Signinwithgoogle(email, password)
             console.log(response);
 
-            
-            
 
             setName(user.fname)
             setIsLoggedIn(true)
