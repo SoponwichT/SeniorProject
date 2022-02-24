@@ -26,7 +26,7 @@ import { AuthContext } from "../services/auth-provider";
 
 const SignIn = () => {
     // TODO: add signinGoole
-    const { signinEmail } = useContext(AuthContext)
+    const { signinEmail,signinGoogle } = useContext(AuthContext)
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("")
     const [loadingAlert, setLoadingAlert] = useState(false)
@@ -50,10 +50,27 @@ const SignIn = () => {
             setLoadingAlert(false)
             window.location.href = '/';
         }
-
-
-
     }
+    const submitSignInGoogle = async (e) => {
+        e.preventDefault();
+        setLoadingStatus(0)
+        setLoadingAlert(true)
+        const response = await signinGoogle(email, password)
+        console.log(response);
+        if (response === SignInStatus.usererror) {
+            setLoadingStatus(2)
+            setLoadingAlert(true)
+        }
+        else if (response === SignInStatus.wrongpwd) {
+            setLoadingStatus(3)
+            setLoadingAlert(true)
+        }
+        else {
+            setLoadingAlert(false)
+            window.location.href = '/';
+        }
+    }
+
 
     return (
         <>

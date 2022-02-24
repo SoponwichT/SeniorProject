@@ -51,8 +51,26 @@ export default function AuthProvider({ children }) {
         }
 
     }
-
+    
     // TODO: async function signinGoogle(email, password) then change to Signinwithgoogle
+    async function signinGoogle(email, password) {
+        try {
+            const response = await Signinwithgoogle(email, password)
+            console.log(response);
+
+            
+            
+
+            setName(user.fname)
+            setIsLoggedIn(true)
+            localStorage.setItem(nameKey, user.fname)
+            localStorage.setItem(isLoggedKey, "true")
+            return SignInStatus.success
+        } catch (error) {
+            return error
+        }
+    }
+
 
     async function logout() {
         setName("")
@@ -78,7 +96,8 @@ export default function AuthProvider({ children }) {
         name,
         isLoggedIn,
         logout,
-        registerEmail
+        registerEmail,
+        signinGoogle
         // TODO: add fuction recently create
     }
 
