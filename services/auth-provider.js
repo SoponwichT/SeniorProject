@@ -1,4 +1,5 @@
 import { useState, useEffect, createContext } from "react"
+import Signinwithgoogle from "../lib/firebase/siginin-with-google"
 import SignInWUsernamePassword, { SignInStatus } from "../lib/firebase/signin-with-email"
 import RegisterWUsernamePassword from "../lib/firebase/register-w-username-password"
 import Firestore from "../lib/firebase/firestore";
@@ -51,19 +52,40 @@ export default function AuthProvider({ children }) {
         }
 
     }
-    
+
     // TODO: async function signinGoogle(email, password) then change to Signinwithgoogle
     async function signinGoogle(email, password) {
         try {
             const response = await Signinwithgoogle(email, password)
             console.log(response);
 
+            if (firestore.isUserExist) {
+                const displayName = response.displayName.split(" ");
+                const fname = displayName[0];
+                const lname = displayName[1];
+                const email = response.email;
+                const user = await firestore.addUser(response.uid, {
+                    fname,
+                    lname,
+                    email
+                })
+                const newuser = await firestore.getUser(response.uid)
+                setName(newuser.fname)
+                setIsLoggedIn(true)
+                localStorage.setItem(nameKey, newuser.fname)
+                localStorage.setItem(isLoggedKey, "true")
+                return SignInStatus.success
+            }
+            else {
+                const user = await firestore.getUser(response.uid)
+                setName(user.fname)
+                setIsLoggedIn(true)
+                localStorage.setItem(nameKey, user.fname)
+                localStorage.setItem(isLoggedKey, "true")
+                return SignInStatus.success
+            }
 
-            setName(user.fname)
-            setIsLoggedIn(true)
-            localStorage.setItem(nameKey, user.fname)
-            localStorage.setItem(isLoggedKey, "true")
-            return SignInStatus.success
+
         } catch (error) {
             return error
         }

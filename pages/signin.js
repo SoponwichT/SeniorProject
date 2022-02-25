@@ -98,7 +98,7 @@ const SignIn = () => {
                         <p>Don't have an account?<Link href="/register"><a className='text-blue-500'> Register</a></Link></p>
                     </div>
                     {/* TODO: replace with new siginGoogle */}
-                    <button onClick={Signinwithgoogle} className="bg-white shadow-lg rounded-md w-full max-w-md my-2 py-2 flex justify-center items-center">
+                    <button onClick={submitSignInGoogle} className="bg-white shadow-lg rounded-md w-full max-w-md my-2 py-2 flex justify-center items-center">
                         <div className='w-6 h-6 relative mr-2' ><Image layout='fill' src={Glogo} /></div>
                         <div>Sign in with Google</div></button>
                 </div>
