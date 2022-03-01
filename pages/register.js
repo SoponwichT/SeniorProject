@@ -53,7 +53,7 @@ const Register = () => {
                 <meta name="keywords" content="palmplanter" />
             </Head>
             <div className='w-full'>
-                <div className='mx-auto '>
+                <div className='mx-auto max-w-md'>
                     <h1>Sign up page</h1>
                     <form onSubmit={submitRegister} className='flex flex-col  gap-y-6 max-w-md'>
                         <FormControl isRequired>

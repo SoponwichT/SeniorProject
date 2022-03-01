@@ -2,6 +2,7 @@ import { useState, useEffect, createContext } from "react"
 import Signinwithgoogle from "../lib/firebase/siginin-with-google"
 import SignInWUsernamePassword, { SignInStatus } from "../lib/firebase/signin-with-email"
 import RegisterWUsernamePassword from "../lib/firebase/register-w-username-password"
+import ResetPassword, { ResetStatus } from "../lib/firebase/reset-password"
 import Firestore from "../lib/firebase/firestore";
 import { RegisterStatus } from "../lib/firebase/register-w-username-password";
 
@@ -14,6 +15,17 @@ export default function AuthProvider({ children }) {
     const [name, setName] = useState("")
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const firestore = new Firestore()
+
+    async function resetPassword(email) {
+        try {
+            const response = await ResetPassword(email)
+            console.log(response);
+            return ResetStatus.success
+
+        } catch (error) {
+            return error
+        }
+    }
 
     async function signinEmail(email, password) {
         try {
@@ -117,7 +129,8 @@ export default function AuthProvider({ children }) {
         isLoggedIn,
         logout,
         registerEmail,
-        signinGoogle
+        signinGoogle,
+        resetPassword
         // TODO: add fuction recently create
     }
 
