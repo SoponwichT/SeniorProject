@@ -37,7 +37,6 @@ export default function GoogleMaps(){
         containerElement={<div style={ containerElementStyle } />}
         mapElement={<div style={ mapElementStyle } />}
       />
-
       
     );  
   }
