@@ -16,12 +16,12 @@ import {
 } from '@chakra-ui/react'
 
 import { useState, useRef, useContext } from 'react'
-import RegisterWUsernamePassword, { RegisterStatus } from '../lib/firebase/register-w-username-password'
+import { RegisterStatus } from '../lib/firebase/register-w-username-password'
 import { AuthContext } from "../services/auth-provider";
 
 const Register = () => {
     const { registerEmail } = useContext(AuthContext)
-    const [email, setEmail] = useState("");
+    const [email, setEmail] = useState("")
     const [fname, setFname] = useState("")
     const [lname, setLname] = useState("")
     const [password, setPassword] = useState("")

@@ -3,6 +3,7 @@ import Signinwithgoogle from "../lib/firebase/siginin-with-google"
 import SignInWUsernamePassword, { SignInStatus } from "../lib/firebase/signin-with-email"
 import RegisterWUsernamePassword from "../lib/firebase/register-w-username-password"
 import ResetPassword, { ResetStatus } from "../lib/firebase/reset-password"
+import { ActivityStatus } from "../lib/firebase/activity-record"
 import Firestore from "../lib/firebase/firestore";
 import { RegisterStatus } from "../lib/firebase/register-w-username-password";
 
@@ -63,6 +64,25 @@ export default function AuthProvider({ children }) {
             return RegisterStatus.sthWrong
         }
 
+    }
+
+    async function activityRecord(waterStatus, fertilizerStatus, recordBy, soilCheck, createAt) {
+        try {
+            const user = await firestore.addActivity({
+                waterStatus,
+                fertilizerStatus,
+                recordBy,
+                soilCheck,
+                createAt
+            })
+
+            return ActivityStatus.success
+
+            
+        } catch (error) {
+            console.log(error.message);
+            return ActivityStatus.sthWrong
+        }
     }
 
     // TODO: async function signinGoogle(email, password) then change to Signinwithgoogle
@@ -130,7 +150,8 @@ export default function AuthProvider({ children }) {
         logout,
         registerEmail,
         signinGoogle,
-        resetPassword
+        resetPassword,
+        activityRecord
         // TODO: add fuction recently create
     }
 
