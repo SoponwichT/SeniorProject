@@ -11,10 +11,12 @@ export const AuthContext = createContext(null);
 
 const nameKey = "name"
 const isLoggedKey = "isLoggedIn"
+const isHadfarmKey = "isHadfarm"
 
 export default function AuthProvider({ children }) {
     const [name, setName] = useState("")
     const [isLoggedIn, setIsLoggedIn] = useState(false)
+    const [isHadfarm, setIsHadfarm] = useState(false)
     const firestore = new Firestore()
 
     async function resetPassword(email) {
@@ -83,7 +85,30 @@ export default function AuthProvider({ children }) {
             console.log(error.message);
             return ActivityStatus.sthWrong
         }
+
     }
+
+    async function FarmInfomation(ownername, numberOflabor, totalarea, numberOfplant, geography) {
+        try {
+            const user = await firestore.addFarmInfo({
+                ownername, 
+                numberOflabor, 
+                totalarea, 
+                numberOfplant, 
+                geography
+            })
+            localStorage.setItem(isHadfarmKey, "true")
+
+            return ActivityStatus.success
+
+            
+        } catch (error) {
+            console.log(error.message);
+            return ActivityStatus.sthWrong
+        }
+
+    }
+
 
     // TODO: async function signinGoogle(email, password) then change to Signinwithgoogle
     async function signinGoogle(email, password) {
@@ -127,8 +152,10 @@ export default function AuthProvider({ children }) {
     async function logout() {
         setName("")
         setIsLoggedIn(false)
+        setIsHadfarm(false)
         localStorage.removeItem(nameKey)
         localStorage.removeItem(isLoggedKey)
+        localStorage.removeItem(isHadfarmKey)
     }
 
 
@@ -137,8 +164,11 @@ export default function AuthProvider({ children }) {
         const name = localStorage.getItem(nameKey)
         setName(name ?? "")
         const isLoggedIn = localStorage.getItem(isLoggedKey)
-        console.log(isLoggedIn);
+        // console.log(isLoggedIn);
+        const isHadfarm = localStorage.getItem(isHadfarmKey)
+        console.log(isHadfarmKey);
         setIsLoggedIn(isLoggedIn === "true")
+        setIsHadfarm(isHadfarm === "true")
 
         return () => { }
     }, [])
@@ -147,11 +177,13 @@ export default function AuthProvider({ children }) {
         signinEmail,
         name,
         isLoggedIn,
+        isHadfarm,
         logout,
         registerEmail,
         signinGoogle,
         resetPassword,
-        activityRecord
+        activityRecord,
+        FarmInfomation
         // TODO: add fuction recently create
     }
 
