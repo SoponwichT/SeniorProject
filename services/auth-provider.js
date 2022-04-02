@@ -10,11 +10,13 @@ import { RegisterStatus } from "../lib/firebase/register-w-username-password";
 export const AuthContext = createContext(null);
 
 const nameKey = "name"
+const uidKey = "uid"
 const isLoggedKey = "isLoggedIn"
 const isHadfarmKey = "isHadfarm"
 
 export default function AuthProvider({ children }) {
     const [name, setName] = useState("")
+    const [uid, setUid] = useState("")
     const [isLoggedIn, setIsLoggedIn] = useState(false)
     const [isHadfarm, setIsHadfarm] = useState(false)
     const firestore = new Firestore()
@@ -36,10 +38,11 @@ export default function AuthProvider({ children }) {
             console.log(response);
 
             const user = await firestore.getUser(response.uid)
-
+            setUid(response.uid)
             setName(user.fname)
             setIsLoggedIn(true)
             localStorage.setItem(nameKey, user.fname)
+            localStorage.setItem(uidKey, response.uid)
             localStorage.setItem(isLoggedKey, "true")
             return SignInStatus.success
         } catch (error) {
@@ -88,9 +91,9 @@ export default function AuthProvider({ children }) {
 
     }
 
-    async function FarmInfomation(ownername, numberOflabor, totalarea, numberOfplant, geography) {
+    async function addFarmInfomation(ownername, numberOflabor, totalarea, numberOfplant, geography) {
         try {
-            const user = await firestore.addFarmInfo({
+            const user = await firestore.addFarmInfo(uid,{
                 ownername, 
                 numberOflabor, 
                 totalarea, 
@@ -100,6 +103,22 @@ export default function AuthProvider({ children }) {
             localStorage.setItem(isHadfarmKey, "true")
 
             return ActivityStatus.success
+
+            
+        } catch (error) {
+            console.log(error.message);
+            return ActivityStatus.sthWrong
+        }
+
+    }
+
+    async function getFarmInfomation() {
+        console.log(uid);
+        try {
+            const farm = await firestore.getFarm(uid)
+            console.log(farm);
+
+            return farm
 
             
         } catch (error) {
@@ -163,10 +182,10 @@ export default function AuthProvider({ children }) {
     useEffect(() => {
         const name = localStorage.getItem(nameKey)
         setName(name ?? "")
+        const uid = localStorage.getItem(uidKey)
+        setUid(uid)
         const isLoggedIn = localStorage.getItem(isLoggedKey)
-        // console.log(isLoggedIn);
         const isHadfarm = localStorage.getItem(isHadfarmKey)
-        console.log(isHadfarmKey);
         setIsLoggedIn(isLoggedIn === "true")
         setIsHadfarm(isHadfarm === "true")
 
@@ -178,12 +197,14 @@ export default function AuthProvider({ children }) {
         name,
         isLoggedIn,
         isHadfarm,
+        uid,
         logout,
         registerEmail,
         signinGoogle,
         resetPassword,
         activityRecord,
-        FarmInfomation
+        addFarmInfomation,
+        getFarmInfomation
         // TODO: add fuction recently create
     }
 

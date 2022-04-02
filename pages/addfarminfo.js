@@ -20,7 +20,7 @@ import { ActivityStatus } from "../lib/firebase/activity-record"
 import { AuthContext } from "../services/auth-provider";
 
 const AddFarmInfo = () => {
-    const { FarmInfomation } = useContext(AuthContext)
+    const { addFarmInfomation } = useContext(AuthContext)
     const [ownername, setOwnername] = useState("")
     const [numberOflabor, setNumberOflabor] = useState("")
     const [totalarea, setTotalarea] = useState("")
@@ -34,7 +34,7 @@ const AddFarmInfo = () => {
         e.preventDefault();
         setLoadingStatus(0)
         setLoadingAlert(true)
-        const response = await FarmInfomation(ownername, numberOflabor, totalarea, numberOfplant, geography)
+        const response = await addFarmInfomation(ownername, numberOflabor, totalarea, numberOfplant, geography)
         console.log(response);
         if (response === ActivityStatus.success) {
             setLoadingStatus(1)

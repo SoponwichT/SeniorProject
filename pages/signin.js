@@ -101,7 +101,8 @@ const SignIn = () => {
                     {/* TODO: replace with new siginGoogle */}
                     <button onClick={submitSignInGoogle} className="bg-white shadow-lg rounded-md w-full max-w-md my-2 py-2 flex justify-center items-center">
                         <div className='w-6 h-6 relative mr-2' ><Image layout='fill' src={Glogo} /></div>
-                        <div>Sign in with Google</div></button>
+                        <div>Sign in with Google</div>
+                    </button>
                 </div>
             </div>
             <AlertDialog
