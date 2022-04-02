@@ -1,4 +1,5 @@
 import Head from 'next/head'
+import { MdWarningAmber } from "react-icons/md"
 
 const  Notification = () => {
     return (
@@ -8,8 +9,11 @@ const  Notification = () => {
                 <meta name="keywords" content="palmplanter" />
             </Head>
             <div>
-                <h1>Notification</h1>
-                <p>This is Notification page</p>
+                <h1 className='text-3xl'>Notification</h1>
+                <div className='bg-white rounded-xl shadow-lg p-4 my-6 border-8 border-yellow-300'>
+                    <h3 className='text-xl font-bold flex mb-2'> <MdWarningAmber className='text-yellow-500 text-3xl mr-2' />Check out your farm</h3>
+                    <div>Don't forget to water the plants and check Fertilizer</div>
+                </div>
             </div>
         </>
     );
