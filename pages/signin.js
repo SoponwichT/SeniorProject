@@ -20,7 +20,7 @@ import Signinwithgoogle from '../lib/firebase/siginin-with-google'
 import Link from "next/link";
 import { useState, useRef, useContext } from 'react'
 import SignInWUsernamePassword, { SignInStatus } from '../lib/firebase/signin-with-email'
-import { AuthContext } from "../services/auth-provider";
+import { AuthContext } from "../services/all-provider";
 
 
 

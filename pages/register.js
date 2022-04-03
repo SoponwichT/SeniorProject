@@ -17,7 +17,7 @@ import {
 
 import { useState, useRef, useContext } from 'react'
 import { RegisterStatus } from '../lib/firebase/register-w-username-password'
-import { AuthContext } from "../services/auth-provider";
+import { AuthContext } from "../services/all-provider";
 
 const Register = () => {
     const { registerEmail } = useContext(AuthContext)

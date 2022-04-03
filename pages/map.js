@@ -4,7 +4,7 @@ import { Button, ButtonGroup, Stack } from '@chakra-ui/react'
 import { MdBuild, MdSettings, MdOutlineAdd } from "react-icons/md"
 import Link from "next/link";
 import { useContext } from "react";
-import { AuthContext } from "../services/auth-provider";
+import { AuthContext } from "../services/all-provider";
 
 
 const Map = () => {

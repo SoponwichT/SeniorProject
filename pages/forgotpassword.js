@@ -16,7 +16,7 @@ import {
 } from '@chakra-ui/react'
 import { useState, useRef, useContext } from 'react'
 import ResetPassword, { ResetStatus } from "../lib/firebase/reset-password"
-import { AuthContext } from "../services/auth-provider";
+import { AuthContext } from "../services/all-provider";
 
 const ResetPW = () => {
     const { resetPassword } = useContext(AuthContext)

@@ -17,7 +17,7 @@ import {
 } from '@chakra-ui/react'
 import DatePicker from "react-datepicker";
 import { useState, useRef, useContext } from 'react'
-import { AuthContext } from "../services/auth-provider";
+import { AuthContext } from "../services/all-provider";
 import { ActivityStatus } from "../lib/firebase/activity-record"
 
 

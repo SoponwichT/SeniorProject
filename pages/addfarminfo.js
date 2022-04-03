@@ -17,7 +17,7 @@ import {
 
 import { useState, useRef, useContext } from 'react'
 import { ActivityStatus } from "../lib/firebase/activity-record"
-import { AuthContext } from "../services/auth-provider";
+import { AuthContext } from "../services/all-provider";
 
 const AddFarmInfo = () => {
     const { addFarmInfomation } = useContext(AuthContext)

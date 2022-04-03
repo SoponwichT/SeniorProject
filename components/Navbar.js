@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getAuth } from "firebase/auth";
 import { useContext } from "react";
-import { AuthContext } from "../services/auth-provider";
+import { AuthContext } from "../services/all-provider";
 
 
 const Navbar = () => {

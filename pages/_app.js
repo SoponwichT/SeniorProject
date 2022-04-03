@@ -2,9 +2,8 @@ import Layout from '../components/Layout'
 import '../styles/globals.css'
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore"
-
 import { ChakraProvider } from '@chakra-ui/react'
-import AuthProvider from '../services/auth-provider';
+import AuthProvider from '../services/all-provider';
 
 
 function MyApp({ Component, pageProps }) {

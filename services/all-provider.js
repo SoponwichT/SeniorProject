@@ -21,10 +21,11 @@ export default function AuthProvider({ children }) {
     const [isHadfarm, setIsHadfarm] = useState(false)
     const firestore = new Firestore()
 
+    // --------------------------------------------------------------------- auth-provider -------------------------------------------------------------
+
     async function resetPassword(email) {
         try {
             const response = await ResetPassword(email)
-            console.log(response);
             return ResetStatus.success
 
         } catch (error) {
@@ -35,8 +36,6 @@ export default function AuthProvider({ children }) {
     async function signinEmail(email, password) {
         try {
             const response = await SignInWUsernamePassword(email, password)
-            console.log(response);
-
             const user = await firestore.getUser(response.uid)
             setUid(response.uid)
             setName(user.fname)
@@ -54,8 +53,6 @@ export default function AuthProvider({ children }) {
 
         try {
             const response = await RegisterWUsernamePassword(email, password)
-            console.log(response);
-
             const user = await firestore.addUser(response.uid, {
                 fname,
                 lname,
@@ -73,7 +70,7 @@ export default function AuthProvider({ children }) {
 
     async function activityRecord(waterStatus, fertilizerStatus, recordBy, soilCheck, createAt) {
         try {
-            const user = await firestore.addActivity(uid,{
+            const user = await firestore.addActivity(uid, {
                 waterStatus,
                 fertilizerStatus,
                 recordBy,
@@ -83,7 +80,7 @@ export default function AuthProvider({ children }) {
 
             return ActivityStatus.success
 
-            
+
         } catch (error) {
             console.log(error.message);
             return ActivityStatus.sthWrong
@@ -91,49 +88,9 @@ export default function AuthProvider({ children }) {
 
     }
 
-    async function addFarmInfomation(ownername, numberOflabor, totalarea, numberOfplant, geography) {
-        try {
-            const user = await firestore.addFarmInfo(uid,{
-                ownername, 
-                numberOflabor, 
-                totalarea, 
-                numberOfplant, 
-                geography
-            })
-            localStorage.setItem(isHadfarmKey, "true")
-
-            return ActivityStatus.success
-
-            
-        } catch (error) {
-            console.log(error.message);
-            return ActivityStatus.sthWrong
-        }
-
-    }
-
-    async function getFarmInfomation() {
-        console.log(uid);
-        try {
-            const farm = await firestore.getFarm(uid)
-            console.log(farm);
-
-            return farm
-
-            
-        } catch (error) {
-            console.log(error.message);
-            return ActivityStatus.sthWrong
-        }
-
-    }
-
-
-    // TODO: async function signinGoogle(email, password) then change to Signinwithgoogle
     async function signinGoogle(email, password) {
         try {
             const response = await Signinwithgoogle(email, password)
-            console.log(response);
 
             if (firestore.isUserExist) {
                 const displayName = response.displayName.split(" ");
@@ -146,8 +103,10 @@ export default function AuthProvider({ children }) {
                     email
                 })
                 const newuser = await firestore.getUser(response.uid)
+                setUid(response.uid)
                 setName(newuser.fname)
                 setIsLoggedIn(true)
+                localStorage.setItem(uidKey, response.uid)
                 localStorage.setItem(nameKey, newuser.fname)
                 localStorage.setItem(isLoggedKey, "true")
                 return SignInStatus.success
@@ -177,7 +136,48 @@ export default function AuthProvider({ children }) {
         localStorage.removeItem(isHadfarmKey)
     }
 
+    // --------------------------------------------------------------------- auth-provider -------------------------------------------------------------
 
+    // --------------------------------------------------------------------- farm-provider -------------------------------------------------------------
+
+    async function addFarmInfomation(ownername, numberOflabor, totalarea, numberOfplant, geography) {
+        try {
+            const user = await firestore.addFarmInfo(uid, {
+                ownername,
+                numberOflabor,
+                totalarea,
+                numberOfplant,
+                geography
+            })
+            localStorage.setItem(isHadfarmKey, "true")
+
+            return ActivityStatus.success
+
+
+        } catch (error) {
+            console.log(error.message);
+            return ActivityStatus.sthWrong
+        }
+
+    }
+
+    async function getFarmInfomation() {
+        console.log(uid);
+        try {
+            const farm = await firestore.getFarm(uid)
+            console.log(farm);
+
+            return farm
+
+
+        } catch (error) {
+            console.log(error.message);
+            return ActivityStatus.sthWrong
+        }
+
+    }
+
+    // --------------------------------------------------------------------- farm-provider -------------------------------------------------------------
 
     useEffect(() => {
         const name = localStorage.getItem(nameKey)
@@ -205,7 +205,6 @@ export default function AuthProvider({ children }) {
         activityRecord,
         addFarmInfomation,
         getFarmInfomation
-        // TODO: add fuction recently create
     }
 
     return <AuthContext.Provider value={passingValue}>{children}</AuthContext.Provider>
