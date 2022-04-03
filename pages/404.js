@@ -13,7 +13,7 @@ const NotFound = () => {
 
     return (
         <div className="not-found">
-            <h1>That page cannot be found.</h1>
+            <h1 className='text-3xl' >That page cannot be found.</h1>
             <p>Please go back to <Link href="/"><a>Home</a></Link></p>
         </div>
     );

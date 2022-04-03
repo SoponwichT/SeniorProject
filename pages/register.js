@@ -54,7 +54,7 @@ const Register = () => {
             </Head>
             <div className='w-full'>
                 <div className='mx-auto max-w-md'>
-                    <h1>Sign up page</h1>
+                    <h1 className='text-3xl'>Sign up page</h1>
                     <form onSubmit={submitRegister} className='flex flex-col  gap-y-6 max-w-md'>
                         <FormControl isRequired>
                             <FormLabel htmlFor='first-name'>First name</FormLabel>

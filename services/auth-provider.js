@@ -73,7 +73,7 @@ export default function AuthProvider({ children }) {
 
     async function activityRecord(waterStatus, fertilizerStatus, recordBy, soilCheck, createAt) {
         try {
-            const user = await firestore.addActivity({
+            const user = await firestore.addActivity(uid,{
                 waterStatus,
                 fertilizerStatus,
                 recordBy,

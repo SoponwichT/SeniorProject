@@ -51,7 +51,7 @@ const AddFarmInfo = () => {
             </Head>
             <div className='w-full'>
                 <div className='mx-auto max-w-md'>
-                    <h1>Add Farm Info</h1>
+                    <h1 className='text-3xl'>Add Farm Info</h1>
                     <form onSubmit={submitFarmInfo} className='flex flex-col  gap-y-6 max-w-md'>
                         <FormControl isRequired>
                             <FormLabel htmlFor='owner-name'>Owner Name</FormLabel>

@@ -54,8 +54,8 @@ const Myfarm = () => {
             </Head>
             <div className='w-full'>
                 <div className='mx-auto max-w-md'>
-                    <h1>Record Activity</h1>
-                    <form onSubmit={submitActivity} className='flex flex-col  gap-y-6 max-w-md'>
+                    <h1 className='text-3xl'>Record Activity</h1>
+                    <form onSubmit={submitActivity} className='flex flex-col gap-y-6 max-w-md my-6'>
                         <FormControl isRequired>
                             <FormLabel htmlFor='water-status'>Water Status</FormLabel>
                             <Checkbox value={water} onChange={(e) => setWater(e.target.value = true)} id='water-status' size='lg'> Water</Checkbox>

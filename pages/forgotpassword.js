@@ -50,7 +50,7 @@ const ResetPW = () => {
             </Head>
             <div className='w-full'>
                 <div className='mx-auto max-w-md'>
-                    <h1>Reset password page</h1>
+                    <h1 className='text-3xl'>Reset password page</h1>
                     <form onSubmit={submitReset} className='flex flex-col  gap-y-6 max-w-md'>
                         <FormControl>
                             <FormLabel htmlFor='email'>Email</FormLabel>

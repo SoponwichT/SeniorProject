@@ -80,7 +80,7 @@ const SignIn = () => {
             </Head>
             <div className='w-full '>
                 <div className='mx-auto max-w-md'>
-                    <h1>Sign in page</h1>
+                    <h1 className='text-3xl'>Sign in page</h1>
                     <form onSubmit={submitSignIn} className='flex flex-col gap-y-6 max-w-md'>
                         <FormControl>
                             <FormLabel htmlFor='email'>Email</FormLabel>
