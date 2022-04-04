@@ -68,25 +68,6 @@ export default function AuthProvider({ children }) {
 
     }
 
-    async function activityRecord(waterStatus, fertilizerStatus, recordBy, soilCheck, createAt) {
-        try {
-            const user = await firestore.addActivity(uid, {
-                waterStatus,
-                fertilizerStatus,
-                recordBy,
-                soilCheck,
-                createAt
-            })
-
-            return ActivityStatus.success
-
-
-        } catch (error) {
-            console.log(error.message);
-            return ActivityStatus.sthWrong
-        }
-
-    }
 
     async function signinGoogle(email, password) {
         try {
@@ -140,14 +121,37 @@ export default function AuthProvider({ children }) {
 
     // --------------------------------------------------------------------- farm-provider -------------------------------------------------------------
 
-    async function addFarmInfomation(ownername, numberOflabor, totalarea, numberOfplant, geography) {
+    async function activityRecord(waterStatus, fertilizerStatus, recordBy, soilCheck, createAt) {
+        try {
+            const user = await firestore.addActivity(uid, {
+                waterStatus,
+                fertilizerStatus,
+                recordBy,
+                soilCheck,
+                createAt
+            })
+
+            return ActivityStatus.success
+
+
+        } catch (error) {
+            console.log(error.message);
+            return ActivityStatus.sthWrong
+        }
+
+    }
+
+    async function addFarmInfomation(ownername, numberOflabor, totalarea, numberOfplant, geography, soilType, waterSourceRainwater, waterSourceIrrigation) {
         try {
             const user = await firestore.addFarmInfo(uid, {
                 ownername,
                 numberOflabor,
                 totalarea,
                 numberOfplant,
-                geography
+                geography,
+                soilType,
+                waterSourceRainwater,
+                waterSourceIrrigation
             })
             localStorage.setItem(isHadfarmKey, "true")
 

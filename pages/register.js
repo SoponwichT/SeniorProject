@@ -103,7 +103,7 @@ const Register = () => {
                                 </AlertDialogHeader>
                                 <AlertDialogFooter>
                                     <Button onClick={(_) => {
-                                        window.location.href = '/';
+                                        window.location.href = '/signin';
                                     }} ref={cancelRef} >
                                         Done
                                     </Button>
