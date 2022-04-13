@@ -15,7 +15,7 @@ const Navbar = () => {
       </div>
       <Link href="/"><a>Home</a></Link>
       <Link href="/map"><a>Map</a></Link>
-      <Link href="/myfarm"><a>My Farm</a></Link>
+      <Link href="/activity"><a>Activity</a></Link>
       <Link href="/notification"><a>Notification</a></Link>
       {!isLoggedIn && <Link href="/signin"><a>Sign In</a></Link>}
       {isLoggedIn && <Link href="/signin"><a className="cursor-pointer" onClick={logout}>Logout</a></Link>}

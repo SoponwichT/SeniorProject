@@ -49,7 +49,7 @@ const Myfarm = () => {
     return (
         <>
             <Head>
-                <title>Palm planter | My farm</title>
+                <title>Palm planter | Activity</title>
                 <meta name="keywords" content="palmplanter" />
             </Head>
             <div className='w-full'>
@@ -80,6 +80,7 @@ const Myfarm = () => {
                         <Button type="submit" colorScheme='blue'>Submit Record</Button>
 
                     </form>
+                    
                 </div>
             </div>
             <AlertDialog

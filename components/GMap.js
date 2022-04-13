@@ -62,13 +62,16 @@ const containerElementStyle = { height: '580px', width: '900px'};
 const mapElementStyle = { height: '100%' };
 
 export default function GoogleMaps(){
+    
     return (
       <RegularMap
         googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjiX8C7RhkmNpufQGYeL20OrLOFS0hXjY&libraries=geometry,drawing,places"
         loadingElement={<div style={ loadingElementStyle } />}
         containerElement={<div style={ containerElementStyle } />}
         mapElement={<div style={ mapElementStyle } />}
+        
       />
+      
       
     );  
   }
