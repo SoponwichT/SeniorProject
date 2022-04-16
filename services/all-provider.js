@@ -12,13 +12,11 @@ export const AuthContext = createContext(null);
 const nameKey = "name"
 const uidKey = "uid"
 const isLoggedKey = "isLoggedIn"
-const isHadfarmKey = "isHadfarm"
 
 export default function AuthProvider({ children }) {
     const [name, setName] = useState("")
     const [uid, setUid] = useState("")
     const [isLoggedIn, setIsLoggedIn] = useState(false)
-    const [isHadfarm, setIsHadfarm] = useState(false)
     const firestore = new Firestore()
 
     // --------------------------------------------------------------------- auth-provider -------------------------------------------------------------
@@ -111,10 +109,8 @@ export default function AuthProvider({ children }) {
     async function logout() {
         setName("")
         setIsLoggedIn(false)
-        setIsHadfarm(false)
         localStorage.removeItem(nameKey)
         localStorage.removeItem(isLoggedKey)
-        localStorage.removeItem(isHadfarmKey)
     }
 
     // --------------------------------------------------------------------- auth-provider -------------------------------------------------------------
@@ -130,9 +126,7 @@ export default function AuthProvider({ children }) {
                 soilCheck,
                 createAt
             })
-
             return ActivityStatus.success
-
 
         } catch (error) {
             console.log(error.message);
@@ -141,7 +135,7 @@ export default function AuthProvider({ children }) {
 
     }
 
-    async function addFarmInfomation(ownername, numberOflabor, totalarea, numberOfplant, geography, soilType, waterSourceRainwater, waterSourceIrrigation) {
+    async function addFarmInfomation(ownername, numberOflabor, totalarea, numberOfplant, geography, soilType, waterSourceRainwater, waterSourceIrrigation, userId) {
         try {
             const user = await firestore.addFarmInfo(uid, {
                 ownername,
@@ -151,12 +145,10 @@ export default function AuthProvider({ children }) {
                 geography,
                 soilType,
                 waterSourceRainwater,
-                waterSourceIrrigation
+                waterSourceIrrigation,
+                userId
             })
-            localStorage.setItem(isHadfarmKey, "true")
-
             return ActivityStatus.success
-
 
         } catch (error) {
             console.log(error.message);
@@ -173,7 +165,6 @@ export default function AuthProvider({ children }) {
 
             return farm
 
-
         } catch (error) {
             console.log(error.message);
             return ActivityStatus.sthWrong
@@ -189,9 +180,7 @@ export default function AuthProvider({ children }) {
         const uid = localStorage.getItem(uidKey)
         setUid(uid)
         const isLoggedIn = localStorage.getItem(isLoggedKey)
-        const isHadfarm = localStorage.getItem(isHadfarmKey)
         setIsLoggedIn(isLoggedIn === "true")
-        setIsHadfarm(isHadfarm === "true")
 
         return () => { }
     }, [])
@@ -200,7 +189,6 @@ export default function AuthProvider({ children }) {
         signinEmail,
         name,
         isLoggedIn,
-        isHadfarm,
         uid,
         logout,
         registerEmail,

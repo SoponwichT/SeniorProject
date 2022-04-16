@@ -7,8 +7,6 @@ import {
   } from "react-google-maps";
 
 
-
-
 const defaultCenter = { lat: 14.069183, lng: 100.607452 };
 
 const defaultOptions = { scrollwheel: true };
@@ -26,7 +24,7 @@ const RegularMap = withScriptjs(
 );
 
 const loadingElementStyle = { height: '150px',width: '150px' };
-const containerElementStyle = { height: '580px', width: '900px'};
+const containerElementStyle = { height: '400px', width: '960px'};
 const mapElementStyle = { height: '100%' };
 
 export default function GoogleMaps(){
