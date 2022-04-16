@@ -24,7 +24,7 @@ const RegularMap = withScriptjs(
 );
 
 const loadingElementStyle = { height: '150px',width: '150px' };
-const containerElementStyle = { height: '400px', width: '960px'};
+const containerElementStyle = { height: '400px', width: '1400px'};
 const mapElementStyle = { height: '100%' };
 
 export default function GoogleMaps(){

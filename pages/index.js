@@ -6,6 +6,9 @@ import styles from '../styles/Home.module.css'
 import { AuthContext } from "../services/all-provider";
 import { useContext, useEffect, useState } from 'react'
 import GoogleMaps from '../components/GMapold.js'
+import { IoMdAdd } from "react-icons/io"
+import { Link } from '@chakra-ui/react'
+import { FarmCard } from '../components/farmcard'
 
 export default function Home() {
     const { getFarmInfomation, uid, isLoggedIn } = useContext(AuthContext)
@@ -33,26 +36,19 @@ export default function Home() {
                 <title>Palm planter | Home</title>
                 <meta name="keywords" content="palmplanter" />
             </Head>
-            <div className='quote-container flex flex-row mx-auto gap-y-24 gap-x-12 flex-wrap justify-left'>
-                <div className='flex flex-col bg-green-100 rounded-md shadow-xl border-2 h-56 w-64 p-6'>
-                    <div className='quote font-delius text-2xl'>
-                        <p>Farm 1</p>
+            <div className='farm-container flex flex-row mx-auto gap-y-24 gap-x-12 flex-wrap justify-left'>
+                <FarmCard data={{name:"Farm 1", activity:"Last activities: 5 days ago"}}/>
+                <FarmCard data={{name:"Farm 2", activity:"Last activities: 4 days ago"}}/>
+                <Link href='/map'>
+                    <div className='flex flex-col bg-gray-100 rounded-md shadow-xl border-2 h-56 w-64 p-6' >
+                        <div className='mx-auto my-auto text-5xl'>
+                            <IoMdAdd />
+                        </div>
                     </div>
-                    <div className='category mt-auto text-slate-400'>
-                        <p>Last activities: 5 days ago</p>
-                    </div>
-                </div>
-                <div className='flex flex-col bg-green-100 rounded-md shadow-xl border-2 h-56 w-64 p-6'>
-                    <div className='quote font-delius text-2xl'>
-                        <p>Farm 2</p>
-                    </div>
-                    <div className='category mt-auto text-slate-400'>
-                        <p>Last activities: 4 days ago</p>
-                    </div>
-                </div>
+                </Link>
             </div>
 
-            <div className='pt-16'>
+            <div className='pt-32'>
                 <GoogleMaps />
             </div>
         </>

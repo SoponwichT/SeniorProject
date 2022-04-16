@@ -137,7 +137,7 @@ export default function AuthProvider({ children }) {
 
     async function addFarmInfomation(ownername, numberOflabor, totalarea, numberOfplant, geography, soilType, waterSourceRainwater, waterSourceIrrigation, userId) {
         try {
-            const user = await firestore.addFarmInfo(uid, {
+            const user = await firestore.addFarmInfo({
                 ownername,
                 numberOflabor,
                 totalarea,
