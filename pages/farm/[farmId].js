@@ -5,6 +5,7 @@ import { useContext, useEffect, useState } from 'react'
 import Head from 'next/head'
 import { Button } from '@chakra-ui/react'
 import { IoMdAdd } from 'react-icons/io';
+import { MdEdit } from 'react-icons/md';
 import { Link } from '@chakra-ui/react'
 
 function FarmInfo() {
@@ -39,7 +40,12 @@ function FarmInfo() {
                 <meta name="keywords" content="palmplanter" />
             </Head>
             <div className='w-full bg-green-200 rounded-md shadow-xl p-4 my-6 border-2'>
-                <h1 className='text-3xl ml-8'>Farm name: {farmId}</h1>
+                <div className="flex">
+                    <h1 className='text-3xl ml-8'>Farm name: {farmId}</h1>
+                    <Button className="ml-auto" leftIcon={<MdEdit />} colorScheme='blue' variant='solid'>
+                        <Link href='/editfarminfo'><a>Edit Farm</a></Link>
+                    </Button>
+                </div>
                 <div className='flex flex-row gap-x-24 mt-8 mx-auto justify-left '>
                     <div className="rounded-md shadow-xl border-2"><GMap /></div>
                     <div className='w-full'>
@@ -57,7 +63,7 @@ function FarmInfo() {
                 </div>
                 <div className="mt-9">
                     <div className="flex pb-3">
-                        <h1 className='text-3xl ml-8'>Activity </h1>
+                        <h1 className='text-3xl ml-8'>Last Activity </h1>
                         <Button className="ml-auto" leftIcon={<IoMdAdd />} colorScheme='blue' variant='solid'>
                             <Link href="/activity"><a>Add Activity</a></Link>
                         </Button>
@@ -65,7 +71,7 @@ function FarmInfo() {
                     <div className='text-xl bg-slate-50 rounded-md shadow-xl p-4 border-2'>
                         <p className="capitalize">Water Status: {act.waterStatus} </p>
                         <p className='mt-5 capitalize'>Fertilizer Status: {act.fertilizerStatus} </p>
-                        <p className='mt-5'>Last soil Status: {act.soilCheck}</p>
+                        <p className='mt-5'>Soil Checked: {act.soilCheck}</p>
                     </div>
                 </div>
             </div>
