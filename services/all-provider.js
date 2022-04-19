@@ -137,7 +137,7 @@ export default function AuthProvider({ children }) {
 
     async function addFarmInfomation(farmname, ownername, numberOflabor, totalarea, numberOfplant, geography, soilType, waterSourceRainwater, waterSourceIrrigation) {
         try {
-            const user = await firestore.addFarmInfo(uid,{
+            const user = await firestore.addFarmInfo(uid, {
                 farmname,
                 ownername,
                 numberOflabor,
@@ -172,6 +172,18 @@ export default function AuthProvider({ children }) {
 
     }
 
+    async function getActivityRecord() {
+        try {
+            const act = await firestore.getActivity(uid)
+
+            return act
+
+        } catch (error) {
+            console.log(error.message);
+            return ActivityStatus.sthWrong
+        }
+    }
+
     // --------------------------------------------------------------------- farm-provider -------------------------------------------------------------
 
     useEffect(() => {
@@ -196,7 +208,8 @@ export default function AuthProvider({ children }) {
         resetPassword,
         activityRecord,
         addFarmInfomation,
-        getFarmInfomation
+        getFarmInfomation,
+        getActivityRecord
     }
 
     return <AuthContext.Provider value={passingValue}>{children}</AuthContext.Provider>

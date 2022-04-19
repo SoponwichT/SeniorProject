@@ -11,12 +11,15 @@ import { Link } from '@chakra-ui/react'
 import { FarmCard } from '../components/farmcard'
 
 export default function Home() {
-    const { getFarmInfomation, uid, isLoggedIn } = useContext(AuthContext)
+    const { getFarmInfomation, uid, isLoggedIn, getActivityRecord } = useContext(AuthContext)
     const [farm, setFarm] = useState({})
+    const [act, setAct] = useState({})
 
     async function init() {
         const result = await getFarmInfomation()
+        const actresult = await getActivityRecord()
         setFarm(result)
+        setAct(actresult)
         console.log(isLoggedIn);
     }
 
@@ -36,17 +39,18 @@ export default function Home() {
                 <title>Palm planter | Home</title>
                 <meta name="keywords" content="palmplanter" />
             </Head>
-            {isLoggedIn ? <div className='farm-container flex flex-row mx-auto gap-y-24 gap-x-12 flex-wrap justify-left'>
-                <Link href={`/farm/${farm.farmname}`}><FarmCard data={{ name: farm.farmname, activity: "Last activities: 5 days ago" }} /></Link>
-                <FarmCard data={{ name: "Farm 2", activity: "Last activities: 4 days ago" }} />
-                <Link href='/addfarminfo'>
-                    <div className='flex flex-col bg-gray-100 rounded-md shadow-xl border-2 h-56 w-64 p-6' >
-                        <div className='mx-auto my-auto text-5xl'>
-                            <IoMdAdd />
+            {isLoggedIn ?
+                <div className='farm-container flex flex-row mx-auto gap-y-24 gap-x-12 flex-wrap justify-left'>
+                    <Link href={`/farm/${farm.farmname}`}><FarmCard data={{ name: farm.farmname, activity: "Last activities: 5 days ago" }} /></Link>
+                    <FarmCard data={{ name: "Farm 2", activity: "Last activities: 4 days ago" }} />
+                    <Link href='/addfarminfo'>
+                        <div className='flex flex-col bg-gray-100 rounded-md shadow-xl border-2 h-56 w-64 p-6' >
+                            <div className='mx-auto my-auto text-5xl'>
+                                <IoMdAdd />
+                            </div>
                         </div>
-                    </div>
-                </Link>
-            </div> :
+                    </Link>
+                </div> :
                 <div className='farm-container flex flex-row mx-auto gap-y-24 gap-x-12 flex-wrap justify-left'>
                     <Link href='/addfarminfo'>
                         <div className='flex flex-col bg-gray-100 rounded-md shadow-xl border-2 h-56 w-64 p-6' >
