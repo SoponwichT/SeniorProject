@@ -3,6 +3,9 @@ import GMap from '../../components/GMap.js'
 import { AuthContext } from "../../services/all-provider";
 import { useContext, useEffect, useState } from 'react'
 import Head from 'next/head'
+import { Button } from '@chakra-ui/react'
+import { IoMdAdd } from 'react-icons/io';
+import { Link } from '@chakra-ui/react'
 
 function FarmInfo() {
     const router = useRouter()
@@ -18,7 +21,7 @@ function FarmInfo() {
         setAct(actresult)
         console.log(isLoggedIn);
     }
-    
+
     useEffect(() => {
         if (uid) {
             init()
@@ -36,7 +39,7 @@ function FarmInfo() {
                 <meta name="keywords" content="palmplanter" />
             </Head>
             <div className='w-full bg-green-200 rounded-md shadow-xl p-4 my-6 border-2'>
-                <h1 className='text-3xl'>Farm name: {farmId}</h1>
+                <h1 className='text-3xl ml-8'>Farm name: {farmId}</h1>
                 <div className='flex flex-row gap-x-24 mt-8 mx-auto justify-left '>
                     <div className="rounded-md shadow-xl border-2"><GMap /></div>
                     <div className='w-full'>
@@ -53,7 +56,12 @@ function FarmInfo() {
                     </div>
                 </div>
                 <div className="mt-9">
-                    <h1 className='text-3xl ml-8'>Activity </h1>
+                    <div className="flex pb-3">
+                        <h1 className='text-3xl ml-8'>Activity </h1>
+                        <Button className="ml-auto" leftIcon={<IoMdAdd />} colorScheme='blue' variant='solid'>
+                            <Link href="/activity"><a>Add Activity</a></Link>
+                        </Button>
+                    </div>
                     <div className='text-xl bg-slate-50 rounded-md shadow-xl p-4 border-2'>
                         <p className="capitalize">Water Status: {act.waterStatus} </p>
                         <p className='mt-5 capitalize'>Fertilizer Status: {act.fertilizerStatus} </p>
