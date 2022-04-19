@@ -58,7 +58,7 @@ const RegularMap = withScriptjs(
 
 
 const loadingElementStyle = { height: '150px',width: '150px' };
-const containerElementStyle = { height: '580px', width: '900px'};
+const containerElementStyle = { height: '450px', width: '600px'};
 const mapElementStyle = { height: '100%' };
 
 export default function GoogleMaps(){

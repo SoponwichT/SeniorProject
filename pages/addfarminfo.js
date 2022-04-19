@@ -27,6 +27,7 @@ const AddFarmInfo = () => {
     const [numberOfplant, setNumberOfplant] = useState("")
     const [geography, setGeography] = useState("")
     const [soilType, setSoilType] = useState("")
+    const [farmname, setFarmname] = useState("")
     const [waterSourceRain, setWaterSourceRain] = useState("")
     const [waterSourceIrri, setWaterSourceIrri] = useState("")
     const [loadingAlert, setLoadingAlert] = useState(false)
@@ -37,7 +38,7 @@ const AddFarmInfo = () => {
         e.preventDefault();
         setLoadingStatus(0)
         setLoadingAlert(true)
-        const response = await addFarmInfomation(ownername, numberOflabor, totalarea, numberOfplant, geography, soilType, waterSourceRain, waterSourceIrri, uid)
+        const response = await addFarmInfomation(farmname, ownername, numberOflabor, totalarea, numberOfplant, geography, soilType, waterSourceRain, waterSourceIrri)
         console.log(response);
         if (response === ActivityStatus.success) {
             setLoadingStatus(1)
@@ -56,6 +57,10 @@ const AddFarmInfo = () => {
                 <div className='mx-auto max-w-md'>
                     <h1 className='text-3xl'>Add Farm Info</h1>
                     <form onSubmit={submitFarmInfo} className='flex flex-col gap-y-6 max-w-md bg-slate-50 rounded-md shadow-xl p-4 my-6 border-2'>
+                    <FormControl isRequired>
+                            <FormLabel htmlFor='farm-name'>Farm Name</FormLabel>
+                            <Input value={farmname} onChange={(e) => setFarmname(e.target.value)} id='farm-name' placeholder='Farm name' />
+                        </FormControl>
                         <FormControl isRequired>
                             <FormLabel htmlFor='owner-name'>Owner Name</FormLabel>
                             <Input value={ownername} onChange={(e) => setOwnername(e.target.value)} id='owner-name' placeholder='Owner name' />

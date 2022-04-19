@@ -135,9 +135,10 @@ export default function AuthProvider({ children }) {
 
     }
 
-    async function addFarmInfomation(ownername, numberOflabor, totalarea, numberOfplant, geography, soilType, waterSourceRainwater, waterSourceIrrigation, userId) {
+    async function addFarmInfomation(farmname, ownername, numberOflabor, totalarea, numberOfplant, geography, soilType, waterSourceRainwater, waterSourceIrrigation) {
         try {
-            const user = await firestore.addFarmInfo({
+            const user = await firestore.addFarmInfo(uid,{
+                farmname,
                 ownername,
                 numberOflabor,
                 totalarea,
@@ -145,8 +146,7 @@ export default function AuthProvider({ children }) {
                 geography,
                 soilType,
                 waterSourceRainwater,
-                waterSourceIrrigation,
-                userId
+                waterSourceIrrigation
             })
             return ActivityStatus.success
 
