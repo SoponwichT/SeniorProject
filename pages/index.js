@@ -35,10 +35,6 @@ export default function Home() {
         }
     }, [uid])
 
-    // useEffect(() => {
-    //     console.log(farm);
-    // },[farm])
-
     const farmElements = farm.map(doc => {
         return <FarmCard data={doc} />
     });
