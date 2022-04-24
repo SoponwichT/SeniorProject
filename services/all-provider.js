@@ -158,11 +158,9 @@ export default function AuthProvider({ children }) {
     }
 
     async function getFarmInfomation() {
-        console.log(uid);
         try {
-            const farm = await firestore.getFarm(uid)
-            console.log(farm);
-
+            const farm = await firestore.getFarm()
+            
             return farm
 
         } catch (error) {

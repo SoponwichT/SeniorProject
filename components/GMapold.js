@@ -8,6 +8,7 @@ import {
 
 
 const defaultCenter = { lat: 14.069183, lng: 100.607452 };
+const defaultCenter2 = { lat: 15.069183, lng: 101.607452 };
 
 const defaultOptions = { scrollwheel: true };
 
@@ -19,6 +20,7 @@ const RegularMap = withScriptjs(
       defaultOptions={ defaultOptions }
     >
       <Marker position={ defaultCenter } />
+      <Marker position={ defaultCenter2 } />
     </GoogleMap>
   ))
 );
