@@ -38,7 +38,7 @@ const AddFarmInfo = () => {
         e.preventDefault();
         setLoadingStatus(0)
         setLoadingAlert(true)
-        const response = await addFarmInfomation(farmname, ownername, numberOflabor, totalarea, numberOfplant, geography, soilType, waterSourceRain, waterSourceIrri)
+        const response = await addFarmInfomation(farmname, ownername, numberOflabor, totalarea, numberOfplant, geography, soilType, waterSourceRain, waterSourceIrri, uid)
         console.log(response);
         if (response === ActivityStatus.success) {
             setLoadingStatus(1)

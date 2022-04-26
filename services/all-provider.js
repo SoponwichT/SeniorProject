@@ -119,7 +119,7 @@ export default function AuthProvider({ children }) {
 
     async function activityRecord(waterStatus, fertilizerStatus, recordBy, soilCheck, createAt) {
         try {
-            const user = await firestore.addActivity(uid, {
+            const user = await firestore.addActivity({
                 waterStatus,
                 fertilizerStatus,
                 recordBy,
@@ -135,9 +135,9 @@ export default function AuthProvider({ children }) {
 
     }
 
-    async function addFarmInfomation(farmname, ownername, numberOflabor, totalarea, numberOfplant, geography, soilType, waterSourceRainwater, waterSourceIrrigation) {
+    async function addFarmInfomation(farmname, ownername, numberOflabor, totalarea, numberOfplant, geography, soilType, waterSourceRainwater, waterSourceIrrigation, uid) {
         try {
-            const user = await firestore.addFarmInfo(uid, {
+            const user = await firestore.addFarmInfo({
                 farmname,
                 ownername,
                 numberOflabor,
@@ -146,7 +146,8 @@ export default function AuthProvider({ children }) {
                 geography,
                 soilType,
                 waterSourceRainwater,
-                waterSourceIrrigation
+                waterSourceIrrigation,
+                uid
             })
             return ActivityStatus.success
 
@@ -172,7 +173,7 @@ export default function AuthProvider({ children }) {
 
     async function getActivityRecord() {
         try {
-            const act = await firestore.getActivity(uid)
+            const act = await firestore.getActivity()
 
             return act
 
