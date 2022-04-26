@@ -8,30 +8,42 @@ import { IoMdAdd } from 'react-icons/io';
 import { MdEdit } from 'react-icons/md';
 import { Link } from '@chakra-ui/react'
 
+
 function FarmInfo() {
     const router = useRouter()
     const { farmId } = router.query
     const { getFarmInfomation, uid, isLoggedIn, getActivityRecord } = useContext(AuthContext)
-    const [farm, setFarm] = useState({})
-    const [act, setAct] = useState({})
+    const [farm, setFarm] = useState([])
+    const [act, setAct] = useState(null)
 
     async function init() {
         const result = await getFarmInfomation()
         const actresult = await getActivityRecord()
-        setFarm(result)
+        const farmdata = result.find(data => data.farmname === farmId);
+        console.log(actresult);
+        setFarm(farmdata)
         setAct(actresult)
         console.log(isLoggedIn);
+
     }
 
     useEffect(() => {
-        if (uid) {
+
+        if (uid && uid !== "" && farmId) {
             init()
         }
 
         return () => {
 
         }
-    }, [uid])
+    }, [uid, farmId])
+
+    function Date() {
+        if(act){
+            const date = act.createAt.toDate();
+            return date.toGMTString();
+        }
+    }
 
     return (
         <>
@@ -51,13 +63,13 @@ function FarmInfo() {
                     <div className='w-full'>
                         <div className='text-xl bg-slate-50 rounded-md shadow-xl p-8 border-2 h-full'>
                             <h1 className='text-3xl text-center'>Farm information</h1>
-                            <p className='mt-5'>Owner name: {farm.ownername}</p>
+                            <p className='mt-5'>Owner name: {farm.farmname}</p>
                             <p className='mt-5'>Number of plant: {farm.numberOfplant}</p>
                             <p className='mt-5'>Total area: {farm.totalarea} ac</p>
                             <p className='mt-5'>Geography: {farm.geography} </p>
                             <p className='mt-5'>Soil Type: {farm.soilType} </p>
-                            <p className='mt-5'>Water source[Rainwater]: {farm.waterSourceIrrigation} </p>
-                            <p className='mt-5'>Water source[Irrigation] : {farm.waterSourceRainwater} </p>
+                            <p className='mt-5'>Water source[Rainwater]: {farm.waterSourceRainwater}</p>
+                            <p className='mt-5'>Water source[Irrigation] : {farm.waterSourceIrrigation} </p>
                         </div>
                     </div>
                 </div>
@@ -68,11 +80,22 @@ function FarmInfo() {
                             <Link href="/activity"><a>Add Activity</a></Link>
                         </Button>
                     </div>
-                    <div className='text-xl bg-slate-50 rounded-md shadow-xl p-4 border-2'>
-                        <p className="capitalize">Water Status: {act.waterStatus} </p>
-                        <p className='mt-5 capitalize'>Fertilizer Status: {act.fertilizerStatus} </p>
-                        <p className='mt-5'>Soil Checked: {act.soilCheck}</p>
-                    </div>
+                    {
+                        act
+                            ? <div className='text-xl bg-slate-50 rounded-md shadow-xl p-4 border-2'>
+                                <p className="capitalize">Water Status: {act.waterStatus ? "Done" : ""} </p>
+                                <p className='mt-5 capitalize'>Fertilizer Status: {act.fertilizerStatus ? "Done" : ""}</p>
+                                <p className='mt-5'>Soil Checked: {act.soilCheck}</p>
+                                <p className='mt-5'>Last Activity: {Date()}</p>
+                                
+                            </div>
+                            : <div className='text-xl bg-slate-50 rounded-md shadow-xl p-4 border-2'>
+                                <p className="capitalize">Water Status: </p>
+                                <p className='mt-5 capitalize'>Fertilizer Status:  </p>
+                                <p className='mt-5'>Soil Checked: </p>
+                            </div>
+                    }
+
                 </div>
             </div>
         </>
