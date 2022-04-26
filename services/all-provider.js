@@ -117,9 +117,10 @@ export default function AuthProvider({ children }) {
 
     // --------------------------------------------------------------------- farm-provider -------------------------------------------------------------
 
-    async function activityRecord(waterStatus, fertilizerStatus, recordBy, soilCheck, createAt) {
+    async function activityRecord(recordOf, waterStatus, fertilizerStatus, recordBy, soilCheck, createAt) {
         try {
             const user = await firestore.addActivity({
+                recordOf,
                 waterStatus,
                 fertilizerStatus,
                 recordBy,

@@ -20,7 +20,7 @@ import { ActivityStatus } from "../lib/firebase/activity-record"
 import { AuthContext } from "../services/all-provider";
 
 const AddFarmInfo = () => {
-    const { addFarmInfomation,uid } = useContext(AuthContext)
+    const { addFarmInfomation, uid } = useContext(AuthContext)
     const [ownername, setOwnername] = useState("")
     const [numberOflabor, setNumberOflabor] = useState("")
     const [totalarea, setTotalarea] = useState("")
@@ -46,7 +46,7 @@ const AddFarmInfo = () => {
             setLoadingStatus(2)
         }
     }
-    
+
     return (
         <>
             <Head>
@@ -56,8 +56,8 @@ const AddFarmInfo = () => {
             <div className='w-full'>
                 <div className='mx-auto max-w-md'>
                     <h1 className='text-3xl'>Add Farm Info</h1>
-                    <form onSubmit={submitFarmInfo} className='flex flex-col gap-y-6 max-w-md bg-slate-50 rounded-md shadow-xl p-4 my-6 border-2'>
-                    <FormControl isRequired>
+                    <form onSubmit={submitFarmInfo} className='flex flex-col gap-y-3 bg-slate-50 rounded-md shadow-xl p-4 my-6 border-2'>
+                        <FormControl isRequired>
                             <FormLabel htmlFor='farm-name'>Farm Name</FormLabel>
                             <Input value={farmname} onChange={(e) => setFarmname(e.target.value)} id='farm-name' placeholder='Farm name' />
                         </FormControl>
@@ -79,23 +79,22 @@ const AddFarmInfo = () => {
                         </FormControl>
                         <FormControl isRequired>
                             <FormLabel htmlFor='geography'>Geography</FormLabel>
-                            <Input value={geography} onChange={(e) => setGeography(e.target.value)} id='geography' placeholder='Plain'/>
+                            <Input value={geography} onChange={(e) => setGeography(e.target.value)} id='geography' placeholder='Plain' />
                         </FormControl>
                         <FormControl isRequired>
                             <FormLabel htmlFor='soil-type'>Soil Type</FormLabel>
-                            <Input value={soilType} onChange={(e) => setSoilType(e.target.value)} id='soil-type' placeholder='none'/>
+                            <Input value={soilType} onChange={(e) => setSoilType(e.target.value)} id='soil-type' placeholder='none' />
                         </FormControl>
                         <FormControl isRequired>
                             <FormLabel htmlFor='water-source-rain'>The main water source for cultivation[Rainwater]</FormLabel>
-                            <Input value={waterSourceRain} onChange={(e) => setWaterSourceRain(e.target.value)} id='water-source-rain' placeholder='none'/>
+                            <Input value={waterSourceRain} onChange={(e) => setWaterSourceRain(e.target.value)} id='water-source-rain' placeholder='none' />
                         </FormControl>
                         <FormControl isRequired>
                             <FormLabel htmlFor='water-source-irrigation'>The main water source for cultivation[Irrigation] </FormLabel>
-                            <Input value={waterSourceIrri} onChange={(e) => setWaterSourceIrri(e.target.value)} id='water-source-irrigation' placeholder='none'/>
+                            <Input value={waterSourceIrri} onChange={(e) => setWaterSourceIrri(e.target.value)} id='water-source-irrigation' placeholder='none' />
                         </FormControl>
 
                         <Button type="submit" colorScheme='blue'>Add Farm Information</Button>
-
                     </form>
                 </div>
             </div>

@@ -18,8 +18,6 @@ const Navbar = () => {
       <Link href="/notification"><a>Notification</a></Link>
       {!isLoggedIn && <Link href="/signin"><a>Sign In</a></Link>}
       {isLoggedIn && <Link href="/signin"><a className="cursor-pointer" onClick={logout}>Logout</a></Link>}
-
-
     </nav>
   );
 }

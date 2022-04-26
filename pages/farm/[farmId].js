@@ -6,7 +6,18 @@ import Head from 'next/head'
 import { Button } from '@chakra-ui/react'
 import { IoMdAdd } from 'react-icons/io';
 import { MdEdit } from 'react-icons/md';
-import { Link } from '@chakra-ui/react'
+import {
+    Link,
+    Table,
+    Thead,
+    Tbody,
+    Tfoot,
+    Tr,
+    Th,
+    Td,
+    TableCaption,
+    TableContainer,
+} from '@chakra-ui/react'
 
 
 function FarmInfo() {
@@ -20,9 +31,10 @@ function FarmInfo() {
         const result = await getFarmInfomation()
         const actresult = await getActivityRecord()
         const farmdata = result.find(data => data.farmname === farmId);
-        console.log(actresult);
+        const actdata = actresult.find(data => data.recordOf === farmId);
+        console.log(actdata);
         setFarm(farmdata)
-        setAct(actresult)
+        setAct(actdata)
         console.log(isLoggedIn);
 
     }
@@ -39,7 +51,7 @@ function FarmInfo() {
     }, [uid, farmId])
 
     function Date() {
-        if(act){
+        if (act) {
             const date = act.createAt.toDate();
             return date.toGMTString();
         }
@@ -59,40 +71,103 @@ function FarmInfo() {
                     </Button>
                 </div>
                 <div className='flex flex-row gap-x-24 mt-8 mx-auto justify-left '>
-                    <div className="rounded-md shadow-xl border-2"><GMap /></div>
+                    <div className="rounded-md shadow-2xl border-2"><GMap /></div>
                     <div className='w-full'>
-                        <div className='text-xl bg-slate-50 rounded-md shadow-xl p-8 border-2 h-full'>
+                        <div className='text-xl bg-slate-50 rounded-md shadow-2xl p-6 border-2 h-full'>
                             <h1 className='text-3xl text-center'>Farm information</h1>
-                            <p className='mt-5'>Owner name: {farm.farmname}</p>
-                            <p className='mt-5'>Number of plant: {farm.numberOfplant}</p>
-                            <p className='mt-5'>Total area: {farm.totalarea} ac</p>
-                            <p className='mt-5'>Geography: {farm.geography} </p>
-                            <p className='mt-5'>Soil Type: {farm.soilType} </p>
-                            <p className='mt-5'>Water source[Rainwater]: {farm.waterSourceRainwater}</p>
-                            <p className='mt-5'>Water source[Irrigation] : {farm.waterSourceIrrigation} </p>
+                            <TableContainer>
+                                <Table variant='striped' colorScheme='blackAlpha'>
+                                    <Tbody>
+                                        <Tr>
+                                            <Td>Owner name:</Td>
+                                            <Td isNumeric>{farm.farmname}</Td>
+                                        </Tr>
+                                        <Tr>
+                                            <Td>Number of plant:</Td>
+                                            <Td isNumeric>{farm.numberOfplant}</Td>
+                                        </Tr>
+                                        <Tr>
+                                            <Td>Total area:</Td>
+                                            <Td isNumeric>{farm.totalarea}</Td>
+                                        </Tr>
+                                        <Tr>
+                                            <Td>Geography:</Td>
+                                            <Td isNumeric>{farm.geography}</Td>
+                                        </Tr>
+                                        <Tr>
+                                            <Td>Soil Type:</Td>
+                                            <Td isNumeric>{farm.soilType}</Td>
+                                        </Tr>
+                                        <Tr>
+                                            <Td>Water source[Rainwater]:</Td>
+                                            <Td isNumeric>{farm.waterSourceRainwater}</Td>
+                                        </Tr>
+                                        <Tr>
+                                            <Td>Water source[Irrigation]:</Td>
+                                            <Td isNumeric>{farm.waterSourceIrrigation}</Td>
+                                        </Tr>
+                                    </Tbody>
+                                </Table>
+                            </TableContainer>
                         </div>
                     </div>
                 </div>
                 <div className="mt-9">
                     <div className="flex pb-3">
-                        <h1 className='text-3xl ml-8'>Last Activity </h1>
+                        <h1 className='text-3xl ml-8'>Last Activity</h1>
                         <Button className="ml-auto" leftIcon={<IoMdAdd />} colorScheme='blue' variant='solid'>
                             <Link href="/activity"><a>Add Activity</a></Link>
                         </Button>
                     </div>
                     {
                         act
-                            ? <div className='text-xl bg-slate-50 rounded-md shadow-xl p-4 border-2'>
-                                <p className="capitalize">Water Status: {act.waterStatus ? "Done" : ""} </p>
-                                <p className='mt-5 capitalize'>Fertilizer Status: {act.fertilizerStatus ? "Done" : ""}</p>
-                                <p className='mt-5'>Soil Checked: {act.soilCheck}</p>
-                                <p className='mt-5'>Last Activity: {Date()}</p>
-                                
+                            ? <div className='text-xl bg-slate-50 rounded-md shadow-2xl p-4 border-2'>
+                                <TableContainer>
+                                    <Table size='sm' variant='striped' colorScheme='blackAlpha'>
+                                        <Tbody>
+                                            <Tr>
+                                                <Td>Water Status:</Td>
+                                                <Td isNumeric>{act.waterStatus ? "Done" : ""}</Td>
+                                            </Tr>
+                                            <Tr>
+                                                <Td>Fertilizer Status:</Td>
+                                                <Td isNumeric>{act.fertilizerStatus ? "Done" : "-"}</Td>
+                                            </Tr>
+                                            <Tr>
+                                                <Td>Soil Status:</Td>
+                                                <Td isNumeric>{act.soilCheck}</Td>
+                                            </Tr>
+                                            <Tr>
+                                                <Td>Last Update:</Td>
+                                                <Td isNumeric>{Date()}</Td>
+                                            </Tr>
+                                        </Tbody>
+                                    </Table>
+                                </TableContainer>
                             </div>
-                            : <div className='text-xl bg-slate-50 rounded-md shadow-xl p-4 border-2'>
-                                <p className="capitalize">Water Status: </p>
-                                <p className='mt-5 capitalize'>Fertilizer Status:  </p>
-                                <p className='mt-5'>Soil Checked: </p>
+                            : <div className='text-xl bg-slate-50 rounded-md shadow-2xl p-4 border-2'>
+                                <TableContainer>
+                                    <Table size='sm' variant='striped' colorScheme='blackAlpha'>
+                                        <Tbody>
+                                            <Tr>
+                                                <Td>Water Status:</Td>
+                                                <Td isNumeric> - </Td>
+                                            </Tr>
+                                            <Tr>
+                                                <Td>Fertilizer Status:</Td>
+                                                <Td isNumeric> - </Td>
+                                            </Tr>
+                                            <Tr>
+                                                <Td>Soil Status:</Td>
+                                                <Td isNumeric> - </Td>
+                                            </Tr>
+                                            <Tr>
+                                                <Td>Last Update:</Td>
+                                                <Td isNumeric> - </Td>
+                                            </Tr>
+                                        </Tbody>
+                                    </Table>
+                                </TableContainer>
                             </div>
                     }
 

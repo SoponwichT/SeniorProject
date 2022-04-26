@@ -13,7 +13,8 @@ import {
     AlertDialogContent,
     AlertDialogOverlay,
     CircularProgress, CircularProgressLabel,
-    Checkbox, CheckboxGroup
+    Checkbox, CheckboxGroup,
+    Select
 } from '@chakra-ui/react'
 import DatePicker from "react-datepicker";
 import { useState, useRef, useContext } from 'react'
@@ -28,6 +29,7 @@ const Myfarm = () => {
     const [water, setWater] = useState(false)
     const [fertilizer, setfertilizer] = useState(false)
     const [recname, setRecname] = useState("")
+    const [recordOf, setRecordOf] = useState("")
     const [soilstatus, setSoilstatus] = useState("")
     const [loadingAlert, setLoadingAlert] = useState(false)
     const [loadingStatus, setLoadingStatus] = useState(0) // 0 = loading, 1 = success, 2 = error
@@ -37,7 +39,7 @@ const Myfarm = () => {
         e.preventDefault();
         setLoadingStatus(0)
         setLoadingAlert(true)
-        const response = await activityRecord(water, fertilizer, recname, soilstatus, startDate)
+        const response = await activityRecord(recordOf, water, fertilizer, recname, soilstatus, startDate)
         console.log(response);
         if (response === ActivityStatus.success) {
             setLoadingStatus(1)
@@ -56,6 +58,13 @@ const Myfarm = () => {
                 <div className='mx-auto max-w-md'>
                     <h1 className='text-3xl'>Record Activity</h1>
                     <form onSubmit={submitActivity} className='flex flex-col gap-y-6 max-w-md my-6 bg-slate-50 rounded-md shadow-xl p-4 border-2'>
+                        <FormControl isRequired>
+                            <FormLabel htmlFor='farm'>Farm</FormLabel>
+                            <Select value={recordOf} onChange={(e) => setRecordOf(e.target.value)} id='farm,' placeholder='Select farm'>
+                                <option>Farm 1</option>
+                                <option>Farm 2</option>
+                            </Select>
+                        </FormControl>
                         <FormControl isRequired>
                             <FormLabel htmlFor='water-status'>Water Status</FormLabel>
                             <Checkbox value={water} onChange={(e) => setWater(e.target.value = true)} id='water-status' size='lg'> Water</Checkbox>
@@ -80,7 +89,7 @@ const Myfarm = () => {
                         <Button type="submit" colorScheme='blue'>Submit Record</Button>
 
                     </form>
-                    
+
                 </div>
             </div>
             <AlertDialog
