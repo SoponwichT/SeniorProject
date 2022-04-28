@@ -24,7 +24,7 @@ import { ActivityStatus } from "../lib/firebase/activity-record"
 
 
 const Myfarm = () => {
-    const { activityRecord } = useContext(AuthContext)
+    const { activityRecord, uid } = useContext(AuthContext)
     const [startDate, setStartDate] = useState(new Date());
     const [water, setWater] = useState(false)
     const [fertilizer, setfertilizer] = useState(false)
@@ -39,7 +39,7 @@ const Myfarm = () => {
         e.preventDefault();
         setLoadingStatus(0)
         setLoadingAlert(true)
-        const response = await activityRecord(recordOf, water, fertilizer, recname, soilstatus, startDate)
+        const response = await activityRecord(recordOf, water, fertilizer, recname, soilstatus, startDate, uid)
         console.log(response);
         if (response === ActivityStatus.success) {
             setLoadingStatus(1)

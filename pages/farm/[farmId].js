@@ -30,8 +30,8 @@ function FarmInfo() {
     async function init() {
         const result = await getFarmInfomation()
         const actresult = await getActivityRecord()
-        const farmdata = result.find(data => data.farmname === farmId);
-        const actdata = actresult.find(data => data.recordOf === farmId);
+        const farmdata = result.find(data => data.farmname === farmId && data.uid === uid);
+        const actdata = actresult.find(data => data.recordOf === farmId && data.uid === uid);
         setFarm(farmdata)
         setAct(actdata)
         console.log(isLoggedIn);

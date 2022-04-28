@@ -13,12 +13,14 @@ import { Button } from '@chakra-ui/react'
 import { MdEdit } from 'react-icons/md';
 
 export default function Home() {
-    const { getFarmInfomation, uid, isLoggedIn, getActivityRecord } = useContext(AuthContext)
+    const { getFarmInfomation, uid, isLoggedIn } = useContext(AuthContext)
     const [farm, setFarm] = useState([])
 
     async function init() {
         const result = await getFarmInfomation()
-        setFarm(result)
+        const resultdata = result.filter(data => data.uid === uid );
+        setFarm(resultdata)
+        console.log(resultdata);
         console.log(isLoggedIn);
 
     }
