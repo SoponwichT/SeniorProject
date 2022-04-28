@@ -2,7 +2,6 @@ import { Link } from '@chakra-ui/react'
 
 export const FarmCard = ({ data }) => {
 
-
     return (
         <Link href={ `/farm/${data.farmname}`}>
             <div className='flex flex-col bg-green-100 rounded-md shadow-xl border-2 h-56 w-64 p-6'>
@@ -14,5 +13,6 @@ export const FarmCard = ({ data }) => {
                 </div>
             </div>
         </Link>
-    )
+    );
+    
 }

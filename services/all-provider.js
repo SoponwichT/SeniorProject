@@ -162,7 +162,6 @@ export default function AuthProvider({ children }) {
     async function getFarmInfomation() {
         try {
             const farm = await firestore.getFarm()
-            
             return farm
 
         } catch (error) {
@@ -170,6 +169,28 @@ export default function AuthProvider({ children }) {
             return ActivityStatus.sthWrong
         }
 
+    }
+
+
+    async function editFarmInformation(farmname, ownername, numberOflabor, totalarea, numberOfplant, geography, soilType, waterSourceRainwater, waterSourceIrrigation, id) {
+        try {
+            const farm = await firestore.editFarm(id,{
+                farmname,
+                ownername,
+                numberOflabor,
+                totalarea,
+                numberOfplant,
+                geography,
+                soilType,
+                waterSourceRainwater,
+                waterSourceIrrigation,
+            })
+            return ActivityStatus.success
+            
+        } catch (error) {
+            console.log(error.message);
+            return ActivityStatus.sthWrong
+        }
     }
 
     async function getActivityRecord() {
@@ -209,7 +230,8 @@ export default function AuthProvider({ children }) {
         activityRecord,
         addFarmInfomation,
         getFarmInfomation,
-        getActivityRecord
+        getActivityRecord,
+        editFarmInformation
     }
 
     return <AuthContext.Provider value={passingValue}>{children}</AuthContext.Provider>

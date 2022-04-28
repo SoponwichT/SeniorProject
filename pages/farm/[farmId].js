@@ -7,7 +7,6 @@ import { Button } from '@chakra-ui/react'
 import { IoMdAdd } from 'react-icons/io';
 import { MdEdit } from 'react-icons/md';
 import {
-    Link,
     Table,
     Thead,
     Tbody,
@@ -18,6 +17,7 @@ import {
     TableCaption,
     TableContainer,
 } from '@chakra-ui/react'
+import Link from 'next/link'
 
 
 function FarmInfo() {
@@ -32,7 +32,6 @@ function FarmInfo() {
         const actresult = await getActivityRecord()
         const farmdata = result.find(data => data.farmname === farmId);
         const actdata = actresult.find(data => data.recordOf === farmId);
-        console.log(actdata);
         setFarm(farmdata)
         setAct(actdata)
         console.log(isLoggedIn);
@@ -67,7 +66,7 @@ function FarmInfo() {
                 <div className="flex">
                     <h1 className='text-3xl ml-8'>Farm name: {farmId}</h1>
                     <Button className="ml-auto" leftIcon={<MdEdit />} colorScheme='blue' variant='solid'>
-                        <Link href='/editfarminfo'><a>Edit Farm</a></Link>
+                        <Link href={{pathname: '/editfarminfo', query: { name: farm.farmname }}} ><a>Edit Farm</a></Link>
                     </Button>
                 </div>
                 <div className='flex flex-row gap-x-24 mt-8 mx-auto justify-left '>

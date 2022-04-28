@@ -7,19 +7,18 @@ import { AuthContext } from "../services/all-provider"
 import { useContext, useEffect, useState } from 'react'
 import GoogleMaps from '../components/GMapold.js'
 import { IoMdAdd } from "react-icons/io"
-import { Link } from '@chakra-ui/react'
+import Link from 'next/link'
 import { FarmCard } from '../components/farmcard'
+import { Button } from '@chakra-ui/react'
+import { MdEdit } from 'react-icons/md';
 
 export default function Home() {
     const { getFarmInfomation, uid, isLoggedIn, getActivityRecord } = useContext(AuthContext)
     const [farm, setFarm] = useState([])
-    const [act, setAct] = useState([])
 
     async function init() {
         const result = await getFarmInfomation()
-        const actresult = await getActivityRecord()
         setFarm(result)
-        setAct(actresult)
         console.log(isLoggedIn);
 
     }
