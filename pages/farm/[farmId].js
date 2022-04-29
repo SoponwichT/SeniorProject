@@ -115,7 +115,7 @@ function FarmInfo() {
                     <div className="flex pb-3">
                         <h1 className='text-3xl ml-8'>Last Activity</h1>
                         <Button className="ml-auto" leftIcon={<IoMdAdd />} colorScheme='blue' variant='solid'>
-                            <Link href="/activity"><a>Add Activity</a></Link>
+                            <Link href={{pathname: '/activity', query: { name: farm.farmname }}}><a>Add Activity</a></Link> 
                         </Button>
                     </div>
                     {
