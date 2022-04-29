@@ -194,6 +194,18 @@ export default function AuthProvider({ children }) {
         }
     }
 
+    async function deleteFarmInformation(id) {
+        try {
+            const act = await firestore.deleteFarm(id)
+            return ActivityStatus.success
+
+        } catch (error) {
+            console.log(error.message);
+            return ActivityStatus.sthWrong
+        }
+    }
+
+
     async function getActivityRecord() {
         try {
             const act = await firestore.getActivity()
@@ -232,7 +244,8 @@ export default function AuthProvider({ children }) {
         addFarmInfomation,
         getFarmInfomation,
         getActivityRecord,
-        editFarmInformation
+        editFarmInformation,
+        deleteFarmInformation
     }
 
     return <AuthContext.Provider value={passingValue}>{children}</AuthContext.Provider>

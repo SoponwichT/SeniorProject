@@ -1,31 +1,39 @@
 import { useRouter } from "next/router"
 import GMap from '../../components/GMap.js'
 import { AuthContext } from "../../services/all-provider";
-import { useContext, useEffect, useState } from 'react'
+import { useState, useRef, useContext, useEffect } from 'react'
 import Head from 'next/head'
 import { Button } from '@chakra-ui/react'
 import { IoMdAdd } from 'react-icons/io';
 import { MdEdit } from 'react-icons/md';
 import {
     Table,
-    Thead,
     Tbody,
-    Tfoot,
     Tr,
-    Th,
     Td,
-    TableCaption,
     TableContainer,
 } from '@chakra-ui/react'
 import Link from 'next/link'
+import {
+    AlertDialog,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogContent,
+    AlertDialogOverlay,
+    CircularProgress
+} from '@chakra-ui/react'
+import { ActivityStatus } from "../../lib/firebase/activity-record"
 
 
 function FarmInfo() {
     const router = useRouter()
     const { farmId } = router.query
-    const { getFarmInfomation, uid, isLoggedIn, getActivityRecord } = useContext(AuthContext)
+    const { getFarmInfomation, uid, isLoggedIn, getActivityRecord, deleteFarmInformation} = useContext(AuthContext)
     const [farm, setFarm] = useState([])
     const [act, setAct] = useState(null)
+    const [loadingAlert, setLoadingAlert] = useState(false)
+    const [loadingStatus, setLoadingStatus] = useState(0)
+    const cancelRef = useRef()
 
     async function init() {
         const result = await getFarmInfomation()
@@ -37,6 +45,19 @@ function FarmInfo() {
         console.log(isLoggedIn);
 
     }
+
+    const deletefarm = async (e) => {
+        e.preventDefault();
+        setLoadingStatus(0)
+        setLoadingAlert(true)
+        const response = await deleteFarmInformation(farm.id)
+        if (response === ActivityStatus.success) {
+            setLoadingStatus(1)
+        } else {
+            setLoadingStatus(2)
+        }
+    }
+
 
     useEffect(() => {
 
@@ -66,7 +87,7 @@ function FarmInfo() {
                 <div className="flex">
                     <h1 className='text-3xl ml-8'>Farm name: {farmId}</h1>
                     <Button className="ml-auto" leftIcon={<MdEdit />} colorScheme='blue' variant='solid'>
-                        <Link href={{pathname: '/editfarminfo', query: { name: farm.farmname }}} ><a>Edit Farm</a></Link>
+                        <Link href={{ pathname: '/editfarminfo', query: { name: farm.farmname } }} ><a>Edit Farm</a></Link>
                     </Button>
                 </div>
                 <div className='flex flex-row gap-x-24 mt-8 mx-auto justify-left '>
@@ -84,6 +105,10 @@ function FarmInfo() {
                                         <Tr>
                                             <Td>Number of plant:</Td>
                                             <Td isNumeric>{farm.numberOfplant}</Td>
+                                        </Tr>
+                                        <Tr>
+                                            <Td>Number of labor:</Td>
+                                            <Td isNumeric>{farm.numberOflabor}</Td>
                                         </Tr>
                                         <Tr>
                                             <Td>Total area:</Td>
@@ -115,7 +140,7 @@ function FarmInfo() {
                     <div className="flex pb-3">
                         <h1 className='text-3xl ml-8'>Last Activity</h1>
                         <Button className="ml-auto" leftIcon={<IoMdAdd />} colorScheme='blue' variant='solid'>
-                            <Link href={{pathname: '/activity', query: { name: farm.farmname }}}><a>Add Activity</a></Link> 
+                            <Link href={{ pathname: '/activity', query: { name: farm.farmname } }}><a>Add Activity</a></Link>
                         </Button>
                     </div>
                     {
@@ -169,9 +194,59 @@ function FarmInfo() {
                                 </TableContainer>
                             </div>
                     }
-
+                    <div className="flex mt-3">
+                        <Button onClick={deletefarm} className="ml-auto" leftIcon={<MdEdit />} colorScheme='red' variant='solid'>
+                            <a>Delete Farm</a>
+                        </Button>
+                    </div>
                 </div>
             </div>
+            <AlertDialog
+                isOpen={loadingAlert}
+                leastDestructiveRef={cancelRef}
+            >
+                <AlertDialogOverlay>
+                    <AlertDialogContent>
+
+                        {loadingStatus === 0 &&
+                            <>
+
+                                <div className='mx-auto py-36'> <CircularProgress size='90px' thickness='6px' isIndeterminate /></div>
+
+                            </>
+                        }
+                        {loadingStatus === 1 &&
+
+                            <>
+                                <AlertDialogHeader>
+                                    Your Farm information has been deleted!!
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                    <Button onClick={(_) => {
+                                        window.location.href = '/';
+                                    }} ref={cancelRef} >
+                                        Done
+                                    </Button>
+
+                                </AlertDialogFooter>
+                            </>
+                        }
+                        {loadingStatus === 2 &&
+                            <>
+                                <AlertDialogHeader>
+                                    Error. Plz try again
+                                </AlertDialogHeader>
+                                <AlertDialogFooter>
+                                    <Button colorScheme='red' ref={cancelRef} onClick={() => { setLoadingAlert(false); }}>
+                                        OK
+                                    </Button>
+                                </AlertDialogFooter>
+                            </>
+                        }
+
+                    </AlertDialogContent>
+                </AlertDialogOverlay>
+            </AlertDialog>
         </>
 
     )
