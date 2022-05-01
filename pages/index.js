@@ -47,7 +47,7 @@ export default function Home() {
                 <meta name="keywords" content="palmplanter" />
             </Head>
             {isLoggedIn ?
-                <div className='farm-container flex flex-row mx-auto gap-y-24 gap-x-12 flex-wrap justify-left'>
+                <div className='farm-container flex flex-row mx-auto gap-y-24 gap-x-12 flex-wrap justify-left cursor-pointer'>
                     {farmElements}
                     <Link href='/addfarminfo'>
                         <div className='flex flex-col bg-gray-100 rounded-md shadow-xl border-2 h-56 w-64 p-6' >
@@ -57,7 +57,7 @@ export default function Home() {
                         </div>
                     </Link>
                 </div> :
-                <div className='farm-container flex flex-row mx-auto gap-y-24 gap-x-12 flex-wrap justify-left'>
+                <div className='farm-container flex flex-row mx-auto gap-y-24 gap-x-12 flex-wrap justify-left cursor-pointer'>
                     <Link href='/addfarminfo'>
                         <div className='flex flex-col bg-gray-100 rounded-md shadow-xl border-2 h-56 w-64 p-6' >
                             <div className='mx-auto my-auto text-5xl'>
