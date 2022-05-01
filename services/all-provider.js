@@ -137,9 +137,25 @@ export default function AuthProvider({ children }) {
 
     }
 
+    async function addFarmarea(farmlat,farmlng,farmarea,uid) {
+        try {
+            const farm = await firestore.addFarmarea({
+                farmlat,
+                farmlng,
+                farmarea,
+                uid
+            })
+            return ActivityStatus.success
+
+        } catch (error) {
+            console.log(error.message);
+            return ActivityStatus.sthWrong
+        }
+    }
+
     async function addFarmInfomation(farmname, ownername, numberOflabor, totalarea, numberOfplant, geography, soilType, waterSourceRainwater, waterSourceIrrigation, uid) {
         try {
-            const user = await firestore.addFarmInfo({
+            const farm = await firestore.addFarmInfo({
                 farmname,
                 ownername,
                 numberOflabor,
@@ -245,7 +261,8 @@ export default function AuthProvider({ children }) {
         getFarmInfomation,
         getActivityRecord,
         editFarmInformation,
-        deleteFarmInformation
+        deleteFarmInformation,
+        addFarmarea
     }
 
     return <AuthContext.Provider value={passingValue}>{children}</AuthContext.Provider>

@@ -18,7 +18,7 @@ export default function Home() {
 
     async function init() {
         const result = await getFarmInfomation()
-        const resultdata = result.filter(data => data.uid === uid );
+        const resultdata = result.filter(data => data.uid === uid);
         setFarm(resultdata)
         console.log(resultdata);
         console.log(isLoggedIn);
@@ -47,28 +47,26 @@ export default function Home() {
                 <meta name="keywords" content="palmplanter" />
             </Head>
             {isLoggedIn ?
-                <div className='farm-container flex flex-row mx-auto gap-y-24 gap-x-12 flex-wrap justify-left cursor-pointer'>
-                    {farmElements}
-                    <Link href='/addfarminfo'>
-                        <div className='flex flex-col bg-gray-100 rounded-md shadow-xl border-2 h-56 w-64 p-6' >
-                            <div className='mx-auto my-auto text-5xl'>
-                                <IoMdAdd />
+                <div>
+                    <div className='farm-container flex flex-row mx-auto gap-y-24 gap-x-12 flex-wrap justify-left cursor-pointer'>
+                        {farmElements}
+                        <Link href='/addfarminfo'>
+                            <div className='flex flex-col bg-gray-100 rounded-md shadow-xl border-2 h-56 w-64 p-6' >
+                                <div className='mx-auto my-auto text-5xl'>
+                                    <IoMdAdd />
+                                </div>
                             </div>
-                        </div>
-                    </Link>
-                </div> :
-                <div className='farm-container flex flex-row mx-auto gap-y-24 gap-x-12 flex-wrap justify-left cursor-pointer'>
-                    <Link href='/addfarminfo'>
-                        <div className='flex flex-col bg-gray-100 rounded-md shadow-xl border-2 h-56 w-64 p-6' >
-                            <div className='mx-auto my-auto text-5xl'>
-                                <IoMdAdd />
-                            </div>
-                        </div>
-                    </Link>
+                        </Link>
+                    </div>
+                    <div className='pt-32'>
+                        <GoogleMaps />
+                    </div>
+                </div>
+                :
+                <div >
+                    <h1 className='text-center text-2xl'>Please login to see your farm list!</h1>
                 </div>}
-            <div className='pt-32'>
-                <GoogleMaps />
-            </div>
+
         </>
     )
 }

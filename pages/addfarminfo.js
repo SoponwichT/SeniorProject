@@ -14,10 +14,10 @@ import {
     AlertDialogOverlay,
     CircularProgress, CircularProgressLabel,
 } from '@chakra-ui/react'
-
 import { useState, useRef, useContext } from 'react'
 import { ActivityStatus } from "../lib/firebase/activity-record"
 import { AuthContext } from "../services/all-provider";
+
 
 const AddFarmInfo = () => {
     const { addFarmInfomation, uid } = useContext(AuthContext)
@@ -120,7 +120,7 @@ const AddFarmInfo = () => {
                                 </AlertDialogHeader>
                                 <AlertDialogFooter>
                                     <Button onClick={(_) => {
-                                        window.location.href = '/';
+                                        window.location.href = '/addmap';
                                     }} ref={cancelRef} >
                                         Done
                                     </Button>
