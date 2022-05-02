@@ -50,7 +50,7 @@ const AddFarmInfo = () => {
         setLoadingStatus(0)
         setLoadingAlert(true)
         const response1 = await addFarmInfomation(farmname, ownername, numberOflabor, totalarea, numberOfplant, geography, soilType, waterSourceRain, waterSourceIrri, uid)
-        const response2 = await addFarmarea(latcoord, lngcoord, areacoord, uid)
+        const response2 = await addFarmarea(latcoord, lngcoord, areacoord, farmname, uid)
         if (response1 && response2 === ActivityStatus.success) {
             setLoadingStatus(1)
         } else {

@@ -137,12 +137,13 @@ export default function AuthProvider({ children }) {
 
     }
 
-    async function addFarmarea(farmlat,farmlng,farmarea,uid) {
+    async function addFarmarea(farmlat, farmlng, farmarea, farmname, uid) {
         try {
             const farm = await firestore.addFarmarea({
                 farmlat,
                 farmlng,
                 farmarea,
+                farmname,
                 uid
             })
             return ActivityStatus.success
