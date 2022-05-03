@@ -152,6 +152,16 @@ export default function AuthProvider({ children }) {
     }
   }
 
+  async function getFarmarea() {
+    try {
+      const farm = await firestore.getFarmarea();
+      return farm;
+    } catch (error) {
+      console.log(error.message);
+      return ActivityStatus.sthWrong;
+    }
+  }
+
   async function addFarmInfomation(
     farmname,
     ownername,
@@ -275,6 +285,7 @@ export default function AuthProvider({ children }) {
     editFarmInformation,
     deleteFarmInformation,
     addFarmarea,
+    getFarmarea
   };
 
   return (

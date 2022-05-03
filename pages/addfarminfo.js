@@ -89,6 +89,7 @@ const AddFarmInfo = () => {
                   setAreacoord={setAreacoord}
                   lat={latcoord}
                   lng={lngcoord}
+                  view
                 />
                 <h1>Instruction:</h1>
                 <p>1. Click on map to get your farm coordinate.</p>

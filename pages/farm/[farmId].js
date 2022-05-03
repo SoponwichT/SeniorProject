@@ -25,6 +25,7 @@ import {
   InfoWindow,
 } from "react-google-maps";
 import { DrawingManager } from "react-google-maps/lib/components/drawing/DrawingManager";
+import Map from "../../components/GMap";
 
 function FarmInfo() {
   const router = useRouter();
@@ -35,6 +36,7 @@ function FarmInfo() {
     isLoggedIn,
     getActivityRecord,
     deleteFarmInformation,
+    getFarmarea
   } = useContext(AuthContext);
   const [farm, setFarm] = useState([]);
   const [act, setAct] = useState(null);
@@ -46,6 +48,11 @@ function FarmInfo() {
   async function init() {
     const result = await getFarmInfomation();
     const actresult = await getActivityRecord();
+    const arearesult = await getFarmarea();
+    console.log(arearesult);
+    const farmcoord = arearesult.find(
+        (data) => data.farmname === farmId && data.uid === uid
+      );
     const farmdata = result.find(
       (data) => data.farmname === farmId && data.uid === uid
     );
@@ -54,7 +61,9 @@ function FarmInfo() {
     );
     setFarm(farmdata);
     setAct(actdata);
+    setAreacoord(farmcoord.farmarea);
     console.log(isLoggedIn);
+    
   }
 
   const deletefarm = async (e) => {
@@ -84,29 +93,6 @@ function FarmInfo() {
     }
   }
 
-  function getPaths(polygon) {
-    var polygonBounds = polygon.getPath();
-    var bounds = [];
-    for (var i = 0; i < polygonBounds.length; i++) {
-      var point = {
-        lat: polygonBounds.getAt(i).lat(),
-        lng: polygonBounds.getAt(i).lng(),
-      };
-      bounds.push(point);
-    }
-    console.log(typeof bounds);
-    return bounds;
-  }
-
-  const RegularMap = withScriptjs(
-    withGoogleMap((props) => (
-      <GoogleMap
-        defaultZoom={15}
-        defaultCenter={{ lat: 14.069183, lng: 100.607452 }}
-      ></GoogleMap>
-    ))
-  );
-
   return (
     <>
       <Head>
@@ -134,16 +120,7 @@ function FarmInfo() {
         </div>
         <div className="flex flex-row gap-x-24 mt-8 mx-auto justify-left ">
           <div className="rounded-md shadow-2xl border-2">
-            <RegularMap
-              googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjiX8C7RhkmNpufQGYeL20OrLOFS0hXjY&v=3.exp&libraries=geometry,drawing,places"
-              loadingElement={
-                <div style={{ height: "150px", width: "150px" }} />
-              }
-              containerElement={
-                <div style={{ height: "510px", width: "600px" }} />
-              }
-              mapElement={<div style={{ height: "100%" }} />}
-            />
+            <Map area={areacoord}/>
           </div>
           <div className="w-full">
             <div className="text-xl bg-slate-50 rounded-md shadow-2xl p-6 border-2 h-full">

@@ -40,6 +40,14 @@ const RegularMap = withScriptjs(
       }}
     >
       <Marker position={{ lat: Number(props.lat), lng: Number(props.lng) }} />
+      <Polygon paths={props.area} options={{
+            fillColor: "#00C897",
+            fillOpacity: 0.2,
+            strokeWeight: 2,
+            strokeColor: "#019267",
+            visible: true,
+            zIndex: 1,
+          }}/>
 
       <DrawingManager
         onPolygonComplete={(value) => {
@@ -47,7 +55,7 @@ const RegularMap = withScriptjs(
           props.setAreacoord(Object.values(area));
         }}
         options={{
-          drawingControl: true,
+          drawingControl: props.view ?? false,
           drawingControlOptions: {
             style: window.google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
             position: window.google.maps.ControlPosition.TOP_CENTER,
