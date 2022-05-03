@@ -23,11 +23,12 @@ import { useState, useRef, useContext, useEffect } from "react";
 import { AuthContext } from "../services/all-provider";
 import { ActivityStatus } from "../lib/firebase/activity-record";
 import { useRouter } from "next/router";
+import { Timestamp } from "firebase/firestore"; 
 
 const Myfarm = () => {
   const router = useRouter();
   const { name } = router.query;
-  const { activityRecord, getFarmInfomation, uid, isLoggedIn } =
+  const { activityRecord, getFarmInfomation, uid, isLoggedIn, addNotification } =
     useContext(AuthContext);
   const [farm, setFarm] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
@@ -39,6 +40,8 @@ const Myfarm = () => {
   const [loadingAlert, setLoadingAlert] = useState(false);
   const [loadingStatus, setLoadingStatus] = useState(0); // 0 = loading, 1 = success, 2 = error
   const cancelRef = useRef();
+  const message = "Today is an activity day! Please do the following tasks 1.Check soil quality 2.Fertilize 3.Water the tree";
+  const date = Timestamp.now()
 
   async function init() {
     const result = await getFarmInfomation();
@@ -68,8 +71,13 @@ const Myfarm = () => {
       startDate,
       uid
     );
+    const addnoti = await addNotification(
+        message,
+        date,
+        uid
+    )
     console.log(response);
-    if (response === ActivityStatus.success) {
+    if (response && addnoti === ActivityStatus.success) {
       setLoadingStatus(1);
     } else {
       setLoadingStatus(2);

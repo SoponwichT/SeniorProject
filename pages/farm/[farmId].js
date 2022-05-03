@@ -49,7 +49,6 @@ function FarmInfo() {
     const result = await getFarmInfomation();
     const actresult = await getActivityRecord();
     const arearesult = await getFarmarea();
-    console.log(arearesult);
     const farmcoord = arearesult.find(
         (data) => data.farmname === farmId && data.uid === uid
       );

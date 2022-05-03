@@ -1,6 +1,4 @@
 import Head from "next/head";
-import Image from "next/image";
-import Palm from "../assets/palm-tree.png";
 import Navbar from "../components/Navbar";
 import styles from "../styles/Home.module.css";
 import { AuthContext } from "../services/all-provider";
@@ -9,8 +7,6 @@ import GoogleMaps from "../components/GMapold.js";
 import { IoMdAdd } from "react-icons/io";
 import Link from "next/link";
 import { FarmCard } from "../components/farmcard";
-import { Button } from "@chakra-ui/react";
-import { MdEdit } from "react-icons/md";
 
 export default function Home() {
   const { getFarmInfomation, uid, isLoggedIn, getFarmarea  } = useContext(AuthContext);

@@ -1,7 +1,33 @@
 import Head from "next/head";
+import Noti from "../components/Notification"
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../services/all-provider";
 import { MdWarningAmber } from "react-icons/md";
 
 const Notification = () => {
+  const { uid, isLoggedIn, getNotification } = useContext(AuthContext);
+  const [noti, setNoti] = useState([])
+
+  async function init() {
+    const result = await getNotification();
+    const resultdata = result.filter((data) => data.uid === uid);
+    setNoti(resultdata)
+    console.log(isLoggedIn);
+    console.log(resultdata);
+  }
+
+  useEffect(() => {
+    if (uid) {
+      init();
+    }
+
+    return () => {};
+  }, [uid]);
+
+  const notiElements = noti.map((doc) => {
+    return <Noti data={doc} init={init}/>;
+  });
+
   return (
     <>
       <Head>
@@ -10,14 +36,7 @@ const Notification = () => {
       </Head>
       <div>
         <h1 className="text-3xl">Notification</h1>
-        <div className="bg-white rounded-xl shadow-lg p-4 my-6 border-8 border-yellow-300">
-          <h3 className="text-xl font-bold flex mb-2">
-            {" "}
-            <MdWarningAmber className="text-yellow-500 text-3xl mr-2" />
-            Check out your farm
-          </h3>
-          <div>Don't forget to water the plants and check Fertilizer</div>
-        </div>
+        {notiElements}
         <div className="bg-white rounded-xl shadow-lg p-4 my-6 border-8 border-yellow-300">
           <h3 className="text-xl font-bold flex mb-2">
             {" "}

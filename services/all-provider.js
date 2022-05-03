@@ -256,6 +256,38 @@ export default function AuthProvider({ children }) {
     }
   }
 
+  async function getNotification() {
+    try {
+      const noti = await firestore.getNoti();
+      return noti;
+    } catch (error) {
+      console.log(error.message);
+      return ActivityStatus.sthWrong;
+    }
+  }
+
+  async function addNotification(message, date, uid) {
+    try {
+      const noti = await firestore.addNoti({ message, date, uid });
+      return ActivityStatus.success;
+    } catch (error) {
+      console.log(error.message);
+      return ActivityStatus.sthWrong;
+    }
+  }
+
+  async function deleteNotification(id) {
+    try {
+      
+      console.log(id);
+      const act = await firestore.deleteNoti(id);
+      return ActivityStatus.success;
+    } catch (error) {
+      console.log(error.message);
+      return ActivityStatus.sthWrong;
+    }
+  }
+
   // --------------------------------------------------------------------- farm-provider -------------------------------------------------------------
 
   useEffect(() => {
@@ -285,7 +317,10 @@ export default function AuthProvider({ children }) {
     editFarmInformation,
     deleteFarmInformation,
     addFarmarea,
-    getFarmarea
+    getFarmarea,
+    getNotification,
+    addNotification,
+    deleteNotification
   };
 
   return (
