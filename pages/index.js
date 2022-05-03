@@ -13,13 +13,16 @@ import { Button } from "@chakra-ui/react";
 import { MdEdit } from "react-icons/md";
 
 export default function Home() {
-  const { getFarmInfomation, uid, isLoggedIn } = useContext(AuthContext);
+  const { getFarmInfomation, uid, isLoggedIn, getFarmarea  } = useContext(AuthContext);
   const [farm, setFarm] = useState([]);
+  const [areas, setAreas] = useState([])
 
   async function init() {
     const result = await getFarmInfomation();
+    const arearesult = await getFarmarea();
     const resultdata = result.filter((data) => data.uid === uid);
     setFarm(resultdata);
+    setAreas(arearesult);
     console.log(resultdata);
     console.log(isLoggedIn);
   }
@@ -55,7 +58,7 @@ export default function Home() {
             </Link>
           </div>
           <div className="pt-32">
-            <GoogleMaps />
+            <GoogleMaps areas={areas}/>
           </div>
         </div>
       ) : (
