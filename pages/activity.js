@@ -42,6 +42,7 @@ const Myfarm = () => {
         const result = await getFarmInfomation()
         const resultdata = result.filter(data => data.uid === uid);
         setFarm(resultdata)
+        console.log(resultdata);
 
     }
 
@@ -69,7 +70,7 @@ const Myfarm = () => {
         }
     }
 
-    console.log(farm);
+    
 
     return (
         <>
@@ -83,9 +84,9 @@ const Myfarm = () => {
                         <h1 className='text-3xl'>Record Activity</h1>
                         {(name) ?
                             <form onSubmit={submitActivity} className='flex flex-col gap-y-6 max-w-md my-6 bg-slate-50 rounded-md shadow-xl p-4 border-2'>
-                                <FormControl isRequired>
+                                <FormControl>
                                     <FormLabel htmlFor='farm'>Farm</FormLabel>
-                                    <Select value={recordOf} onChange={(e) => setRecordOf(e.target.value)} id='farm,' placeholder={name}>
+                                    <Select value={name} onChange={(e) => setRecordOf(e.target.value)} id='farm,' placeholder={name}>
                                     </Select>
                                 </FormControl>
                                 <FormControl isRequired>

@@ -17,15 +17,7 @@ import {
 import { useState, useRef, useContext } from 'react'
 import { ActivityStatus } from "../lib/firebase/activity-record"
 import { AuthContext } from "../services/all-provider";
-import {
-    withScriptjs,
-    withGoogleMap,
-    GoogleMap,
-    Polygon,
-    Marker,
-    InfoWindow
-} from "react-google-maps";
-import { DrawingManager } from "react-google-maps/lib/components/drawing/DrawingManager";
+import Map from "../components/GMap"
 
 const AddFarmInfo = () => {
     const { addFarmInfomation, addFarmarea, uid } = useContext(AuthContext)
@@ -58,72 +50,7 @@ const AddFarmInfo = () => {
         }
     }
 
-    function getPaths(polygon) {
 
-        var polygonBounds = polygon.getPath();
-        var bounds = [];
-        for (var i = 0; i < polygonBounds.length; i++) {
-            var point = {
-                lat: polygonBounds.getAt(i).lat(),
-                lng: polygonBounds.getAt(i).lng()
-            };
-            bounds.push(point);
-        }
-        console.log(typeof bounds);
-        return bounds
-    }
-
-
-    const RegularMap = withScriptjs(
-        withGoogleMap(props =>
-        (
-            <GoogleMap
-                defaultZoom={15}
-                defaultCenter={{ lat: 14.069183, lng: 100.607452 }}
-                onClick={e => {
-                    const lat = e.latLng.lat();
-                    const lng = e.latLng.lng();
-                    console.log(lat, lng);
-                    setLatcoord(lat)
-                    setLngcoord(lng)
-
-                }}
-
-            >
-
-                <Marker position={{ lat: Number(latcoord), lng: Number(lngcoord) }} />
-
-                <DrawingManager
-                    onPolygonComplete={value => {
-                        const area = getPaths(value)
-                        setAreacoord(Object.values(area))
-                        console.log(Object.values(area));
-                    }}
-                    options={{
-                        drawingControl: true,
-                        drawingControlOptions: {
-                            style: window.google.maps.MapTypeControlStyle.HORIZONTAL_BAR,
-                            position: window.google.maps.ControlPosition.TOP_CENTER,
-                            drawingModes: [window.google.maps.drawing.OverlayType.POLYGON]
-                        },
-                        polygonOptions: {
-                            fillColor: "#00C897",
-                            fillOpacity: 0.2,
-                            strokeWeight: 2,
-                            strokeColor: "#019267",
-                            clickable: true,
-                            editable: true,
-                            draggable: true,
-                            geodesic: false,
-                            visible: true,
-                            zIndex: 1
-                        }
-                    }}
-                />
-            </GoogleMap>
-
-        ))
-    );
 
     return (
         <>
@@ -137,12 +64,7 @@ const AddFarmInfo = () => {
                     <form onSubmit={submitFarmInfo} className=' bg-slate-50 rounded-md shadow-xl p-4 my-6 border-2'>
                         <div className='flex flex-row gap-x-28 justify-around'>
                             <div>
-                                <RegularMap
-                                    googleMapURL="https://maps.googleapis.com/maps/api/js?key=AIzaSyCjiX8C7RhkmNpufQGYeL20OrLOFS0hXjY&v=3.exp&libraries=geometry,drawing,places"
-                                    loadingElement={<div style={{ height: '150px', width: '150px' }} />}
-                                    containerElement={<div style={{ height: '510px', width: '600px' }} />}
-                                    mapElement={<div style={{ height: '100%' }} />}
-                                />
+                                <Map setLatcoord={setLatcoord} setLngcoord={setLngcoord} setAreacoord={setAreacoord} lat={latcoord} lng={lngcoord}/>
                                 <h1>Instruction:</h1>
                                 <p>1. Click on map to get your farm coordinate.</p>
                                 <p>2. Draw your farm area by using polygon.</p>
