@@ -32,7 +32,7 @@ export default function Home() {
   }, [uid]);
 
   const farmElements = farm.map((doc) => {
-    return <FarmCard data={doc} />;
+    return <FarmCard key={doc} data={doc} />;
   });
 
   return (

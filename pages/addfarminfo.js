@@ -96,7 +96,7 @@ const AddFarmInfo = () => {
                 <p>2. Draw your farm area by using polygon.</p>
                 <div className="flex flex-col gap-y-3 p-1">
                   <FormControl isRequired>
-                    <FormLabel htmlFor="latcoord">Mark's latitude</FormLabel>
+                    <FormLabel htmlFor="latcoord">Mark&apos;s latitude</FormLabel>
                     <Input
                       value={latcoord}
                       onChange={(e) => setLatcoord(e.target.value)}
@@ -105,7 +105,7 @@ const AddFarmInfo = () => {
                     />
                   </FormControl>
                   <FormControl isRequired>
-                    <FormLabel htmlFor="lngcoord">Mark's longitude</FormLabel>
+                    <FormLabel htmlFor="lngcoord">Mark&apos;s longitude</FormLabel>
                     <Input
                       value={lngcoord}
                       onChange={(e) => setLngcoord(e.target.value)}

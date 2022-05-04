@@ -102,7 +102,7 @@ const SignIn = () => {
           </form>
           <div>
             <p>
-              Don't have an account?
+              Don&apos;t have an account?
               <Link href="/register">
                 <a className="text-blue-500"> Register</a>
               </Link>

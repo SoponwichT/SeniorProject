@@ -28,7 +28,7 @@ const Notification = () => {
   }, [uid]);
 
   const notiElements = noti.map((doc) => {
-    return <Noti data={doc} init={init} />;
+    return <Noti key={doc} data={doc} init={init} />;
   });
 
   return (

@@ -121,7 +121,7 @@ const Myfarm = () => {
         <div className="w-full">
           <div className="mx-auto max-w-md">
             <h1 className="text-3xl">Record Activity</h1>
-            <p className="text-red-600">( Please don't forget to record activity every big activity day) </p>
+            <p className="text-red-600">( Please do not forget to record activity every big activity day) </p>
             <form
               onSubmit={submitActivity}
               className="flex flex-col gap-y-6 max-w-md my-3 bg-slate-50 rounded-md shadow-xl p-4 border-2"

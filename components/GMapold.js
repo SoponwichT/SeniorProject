@@ -19,7 +19,7 @@ const RegularMap = withScriptjs(
     >
       
 
-      {props.areas.map(area => <Marker label={area.farmname} position={{lat: area.farmlat, lng: area.farmlng}} />)}
+      {props.areas.map(area => <Marker key={area} label={area.farmname} position={{lat: area.farmlat, lng: area.farmlng}} />)}
     </GoogleMap>
   ))
 );
