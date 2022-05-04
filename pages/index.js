@@ -15,8 +15,9 @@ export default function Home() {
     const result = await getFarmInfomation();
     const arearesult = await getFarmarea();
     const resultdata = result.filter((data) => data.uid === uid);
+    const areadata = arearesult.filter((data) => data.uid === uid);
     setFarm(resultdata);
-    setAreas(arearesult);
+    setAreas(areadata);
     console.log(resultdata);
     console.log(isLoggedIn);
   }
