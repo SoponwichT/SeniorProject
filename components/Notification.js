@@ -1,5 +1,5 @@
 import { MdWarningAmber } from "react-icons/md";
-import { TiDeleteOutline } from "react-icons/ti";
+import { TiDelete } from "react-icons/ti";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../services/all-provider";
 
@@ -21,7 +21,7 @@ const NotiCard = ({ data, init }) => {
             Check out your farm ({data.recordOf})
           </h3>
           <button className="ml-auto mb-5" onClick={deleteNoti}>
-            <TiDeleteOutline />
+            <TiDelete />
           </button>
         </div>
         <div>{data.message}</div>
@@ -36,7 +36,7 @@ const NotiCard = ({ data, init }) => {
             Check out your farm ({data.recordOf})
           </h3>
           <button className="ml-auto mb-5" onClick={deleteNoti}>
-            <TiDeleteOutline />
+            <TiDelete />
           </button>
         </div>
         <div>{data.message}</div>
