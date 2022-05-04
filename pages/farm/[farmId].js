@@ -75,17 +75,19 @@ function FarmInfo() {
   useEffect(() => {
     if (uid && uid !== "" && farmId) {
       init();
+      Date();
     }
 
     return () => {};
   }, [uid, farmId]);
   
-  console.log(areacoord);
+  
   
   function Date() {
     if (act) {
+      var options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
       const date = act.createAt.toDate();
-      return date.toGMTString();
+      return date.toLocaleString("en-US", options);
     }
   }
 
