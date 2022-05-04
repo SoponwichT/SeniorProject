@@ -6,7 +6,7 @@ import { useContext, useEffect, useState } from "react";
 import GoogleMaps from "../components/GMapold.js";
 import { IoMdAdd } from "react-icons/io";
 import Link from "next/link";
-import { FarmCard } from "../components/farmcard";
+import { FarmCard } from "../components/Farmcard";
 
 export default function Home() {
   const { getFarmInfomation, uid, isLoggedIn, getFarmarea  } = useContext(AuthContext);

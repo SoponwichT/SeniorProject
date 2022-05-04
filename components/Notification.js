@@ -1,5 +1,5 @@
 import { MdWarningAmber } from "react-icons/md";
-import { TiDeleteOutline } from "react-icons/Ti";
+import { TiDeleteOutline } from "react-icons/ti";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../services/all-provider";
 
