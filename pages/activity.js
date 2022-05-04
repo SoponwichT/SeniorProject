@@ -46,13 +46,13 @@ const Myfarm = () => {
   const [loadingStatus, setLoadingStatus] = useState(0); // 0 = loading, 1 = success, 2 = error
   const cancelRef = useRef();
   const message1 =
-    "Today is a big activity day! Please do the following tasks 1.Check soil quality 2.Fertilize 3.Water the tree";
+    "Tomorrow is a big activity day! Please do the following tasks 1.Check soil quality 2.Fertilize 3.Water the tree 4.Trim the leave 5.Harvest the crops";
   const message2 =
-    "Today is a small activity day! Please do the following tasks 1.Water the tree 2.trim the tree";
+    "Tomorrow is a small activity day! Please do the following tasks 1.Water the tree 2.Trim some tree 3.Harvest the crops";
   const type1 = 0;
   const type2 = 1;
   var timestamp1 = Math.round(new Date().getTime() / 1000);
-  // timestamp += 2592000; // 30days
+  // timestamp += 2505600; // 29days
   timestamp1 += 60;
   var datetime1 = new Date(timestamp1 * 1000);
   var timestamp2 = Math.round(new Date().getTime() / 1000);
@@ -121,10 +121,10 @@ const Myfarm = () => {
         <div className="w-full">
           <div className="mx-auto max-w-md">
             <h1 className="text-3xl">Record Activity</h1>
-
+            <p className="text-red-600">( Please don't forget to record activity every big activity day) </p>
             <form
               onSubmit={submitActivity}
-              className="flex flex-col gap-y-6 max-w-md my-6 bg-slate-50 rounded-md shadow-xl p-4 border-2"
+              className="flex flex-col gap-y-6 max-w-md my-3 bg-slate-50 rounded-md shadow-xl p-4 border-2"
             >
               <FormControl isRequired>
                 <FormLabel htmlFor="farm">Farm</FormLabel>
