@@ -152,6 +152,16 @@ export default function AuthProvider({ children }) {
     }
   }
 
+  async function deleteFarmcoordarea(id){
+    try {
+      const farm = await firestore.deleteFarmarea(id);
+      return ActivityStatus.success;
+    } catch (error) {
+      console.log(error.message);
+      return ActivityStatus.sthWrong;
+    }
+  }
+
   async function getFarmarea() {
     try {
       const farm = await firestore.getFarmarea();
@@ -266,9 +276,9 @@ export default function AuthProvider({ children }) {
     }
   }
 
-  async function addNotification(message, date, uid) {
+  async function addNotification(message, date, uid, recordOf, type) {
     try {
-      const noti = await firestore.addNoti({ message, date, uid });
+      const noti = await firestore.addNoti({ message, date, uid, recordOf, type });
       return ActivityStatus.success;
     } catch (error) {
       console.log(error.message);
@@ -320,7 +330,8 @@ export default function AuthProvider({ children }) {
     getFarmarea,
     getNotification,
     addNotification,
-    deleteNotification
+    deleteNotification,
+    deleteFarmcoordarea
   };
 
   return (

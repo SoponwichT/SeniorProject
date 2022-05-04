@@ -17,14 +17,6 @@ import {
   CircularProgress,
 } from "@chakra-ui/react";
 import { ActivityStatus } from "../../lib/firebase/activity-record";
-import {
-  withScriptjs,
-  withGoogleMap,
-  GoogleMap,
-  Polygon,
-  InfoWindow,
-} from "react-google-maps";
-import { DrawingManager } from "react-google-maps/lib/components/drawing/DrawingManager";
 import Map from "../../components/GMap";
 
 function FarmInfo() {
@@ -36,11 +28,13 @@ function FarmInfo() {
     isLoggedIn,
     getActivityRecord,
     deleteFarmInformation,
-    getFarmarea
+    getFarmarea,
+    deleteFarmcoordarea
   } = useContext(AuthContext);
   const [farm, setFarm] = useState([]);
   const [act, setAct] = useState(null);
   const [areacoord, setAreacoord] = useState([]);
+  const [areaid, setAreaid] = useState([]);
   const [loadingAlert, setLoadingAlert] = useState(false);
   const [loadingStatus, setLoadingStatus] = useState(0);
   const cancelRef = useRef();
@@ -55,12 +49,13 @@ function FarmInfo() {
     const farmdata = result.find(
       (data) => data.farmname === farmId && data.uid === uid
     );
-    const actdata = actresult.find(
+    const actdata = actresult.filter(
       (data) => data.recordOf === farmId && data.uid === uid
-    );
+    ).sort((a,b) => b.createAt.toMillis()-a.createAt.toMillis());
     setFarm(farmdata);
-    setAct(actdata);
+    setAct(actdata[0]);
     setAreacoord(farmcoord.farmarea);
+    setAreaid(farmcoord)
     console.log(isLoggedIn);
   }
 
@@ -69,7 +64,8 @@ function FarmInfo() {
     setLoadingStatus(0);
     setLoadingAlert(true);
     const response = await deleteFarmInformation(farm.id);
-    if (response === ActivityStatus.success) {
+    const response2 = await deleteFarmcoordarea(areaid.id);
+    if (response && response2 === ActivityStatus.success) {
       setLoadingStatus(1);
     } else {
       setLoadingStatus(2);
@@ -83,12 +79,11 @@ function FarmInfo() {
 
     return () => {};
   }, [uid, farmId]);
-
   
+  console.log(areacoord);
   
   function Date() {
     if (act) {
-      
       const date = act.createAt.toDate();
       return date.toGMTString();
     }
@@ -121,7 +116,7 @@ function FarmInfo() {
         </div>
         <div className="flex flex-row gap-x-24 mt-8 mx-auto justify-left ">
           <div className="rounded-md shadow-2xl border-2">
-            <Map area={areacoord}/>
+            <Map area={areacoord} position={areaid}/>
           </div>
           <div className="w-full">
             <div className="text-xl bg-slate-50 rounded-md shadow-2xl p-6 border-2 h-full">

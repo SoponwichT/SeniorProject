@@ -23,13 +23,17 @@ import { useState, useRef, useContext, useEffect } from "react";
 import { AuthContext } from "../services/all-provider";
 import { ActivityStatus } from "../lib/firebase/activity-record";
 import { useRouter } from "next/router";
-import { Timestamp } from "firebase/firestore"; 
 
 const Myfarm = () => {
   const router = useRouter();
   const { name } = router.query;
-  const { activityRecord, getFarmInfomation, uid, isLoggedIn, addNotification } =
-    useContext(AuthContext);
+  const {
+    activityRecord,
+    getFarmInfomation,
+    uid,
+    isLoggedIn,
+    addNotification,
+  } = useContext(AuthContext);
   const [farm, setFarm] = useState([]);
   const [startDate, setStartDate] = useState(new Date());
   const [water, setWater] = useState(false);
@@ -40,13 +44,18 @@ const Myfarm = () => {
   const [loadingAlert, setLoadingAlert] = useState(false);
   const [loadingStatus, setLoadingStatus] = useState(0); // 0 = loading, 1 = success, 2 = error
   const cancelRef = useRef();
-  const message = "Today is an activity day! Please do the following tasks 1.Check soil quality 2.Fertilize 3.Water the tree";
-  const date = Timestamp.now()
- 
-  var timestamp = Math.round(new Date().getTime() / 1000); 
-  timestamp += 2592000; 
-  var datetime = new Date(timestamp*1000);
-  console.log(datetime);
+  const message1 = "Today is a big activity day! Please do the following tasks 1.Check soil quality 2.Fertilize 3.Water the tree";
+  const message2 = "Today is a small activity day! Please do the following tasks 1.Water the tree 2.trim the tree";
+  const type1 = 0
+  const type2 = 1
+  var timestamp1 = Math.round(new Date().getTime() / 1000);
+  // timestamp += 2592000; // 30days
+  timestamp1 += 60;
+  var datetime1 = new Date(timestamp1 * 1000);
+  var timestamp2 = Math.round(new Date().getTime() / 1000);
+  // timestamp2 += 1209600; // 14days
+  timestamp2 += 50
+  var datetime2 = new Date(timestamp2 * 1000);
 
   async function init() {
     const result = await getFarmInfomation();
@@ -76,13 +85,10 @@ const Myfarm = () => {
       startDate,
       uid
     );
-    const addnoti = await addNotification(
-        message,
-        datetime,
-        uid
-    )
+    const addnoti1 = await addNotification(message1, datetime1, uid, recordOf, type1);
+    const addnoti2 = await addNotification(message2, datetime2, uid, recordOf, type2);
     console.log(response);
-    if (response && addnoti === ActivityStatus.success) {
+    if (response && addnoti1 && addnoti2 === ActivityStatus.success) {
       setLoadingStatus(1);
     } else {
       setLoadingStatus(2);
@@ -99,153 +105,80 @@ const Myfarm = () => {
         <div className="w-full">
           <div className="mx-auto max-w-md">
             <h1 className="text-3xl">Record Activity</h1>
-            {name ? (
-              <form
-                onSubmit={submitActivity}
-                className="flex flex-col gap-y-6 max-w-md my-6 bg-slate-50 rounded-md shadow-xl p-4 border-2"
-              >
-                <FormControl>
-                  <FormLabel htmlFor="farm">Farm</FormLabel>
-                  <Select
-                    value={name}
-                    onChange={(e) => setRecordOf(e.target.value)}
-                    id="farm,"
-                    placeholder={name}
-                  ></Select>
-                </FormControl>
-                <FormControl isRequired>
-                  <FormLabel htmlFor="water-status">Water Status</FormLabel>
-                  <Checkbox
-                    value={water}
-                    onChange={(e) => setWater((e.target.value = true))}
-                    id="water-status"
-                    size="lg"
-                  >
-                    {" "}
-                    Water
-                  </Checkbox>
-                </FormControl>
-                <FormControl>
-                  <FormLabel htmlFor="fertilizer-status">
-                    Fertilizer Status
-                  </FormLabel>
-                  <Checkbox
-                    value={fertilizer}
-                    onChange={(e) => setfertilizer((e.target.value = true))}
-                    id="fertilizer-status"
-                    size="lg"
-                  >
-                    {" "}
-                    Fertilizer
-                  </Checkbox>
-                </FormControl>
-                <FormControl isRequired>
-                  <FormLabel htmlFor="recorder-name">Record By</FormLabel>
-                  <Input
-                    value={recname}
-                    onChange={(e) => setRecname(e.target.value)}
-                    id="recorder-name"
-                    placeholder="name"
-                  />
-                </FormControl>
-                <FormControl isRequired>
-                  <FormLabel htmlFor="soil-status">Soil Status</FormLabel>
-                  <Input
-                    value={soilstatus}
-                    onChange={(e) => setSoilstatus(e.target.value)}
-                    id="soil-status"
-                    placeholder="normal"
-                  />
-                </FormControl>
-                <FormControl>
-                  <FormLabel htmlFor="record-date">Record Date</FormLabel>
-                  <DatePicker
-                    selected={startDate}
-                    onChange={(date) => setStartDate(date.target.value)}
-                    id="record-date"
-                  />
-                </FormControl>
-                <Button type="submit" colorScheme="blue">
-                  Submit Record
-                </Button>
-              </form>
-            ) : (
-              <form
-                onSubmit={submitActivity}
-                className="flex flex-col gap-y-6 max-w-md my-6 bg-slate-50 rounded-md shadow-xl p-4 border-2"
-              >
-                <FormControl isRequired>
-                  <FormLabel htmlFor="farm">Farm</FormLabel>
-                  <Select
-                    value={recordOf}
-                    onChange={(e) => setRecordOf(e.target.value)}
-                    id="farm,"
-                    placeholder="Select farm"
-                  >
-                    {farm.map((farm) => (
-                      <option key={farm.farmname} value={farm.farmname}>
-                        {farm.farmname}
-                      </option>
-                    ))}
-                  </Select>
-                </FormControl>
-                <FormControl isRequired>
-                  <FormLabel htmlFor="water-status">Water Status</FormLabel>
-                  <Checkbox
-                    value={water}
-                    onChange={(e) => setWater((e.target.value = true))}
-                    id="water-status"
-                    size="lg"
-                  >
-                    {" "}
-                    Water
-                  </Checkbox>
-                </FormControl>
-                <FormControl>
-                  <FormLabel htmlFor="fertilizer-status">
-                    Fertilizer Status
-                  </FormLabel>
-                  <Checkbox
-                    value={fertilizer}
-                    onChange={(e) => setfertilizer((e.target.value = true))}
-                    id="fertilizer-status"
-                    size="lg"
-                  >
-                    {" "}
-                    Fertilizer
-                  </Checkbox>
-                </FormControl>
-                <FormControl isRequired>
-                  <FormLabel htmlFor="recorder-name">Record By</FormLabel>
-                  <Input
-                    value={recname}
-                    onChange={(e) => setRecname(e.target.value)}
-                    id="recorder-name"
-                    placeholder="name"
-                  />
-                </FormControl>
-                <FormControl isRequired>
-                  <FormLabel htmlFor="soil-status">Soil Status</FormLabel>
-                  <Input
-                    value={soilstatus}
-                    onChange={(e) => setSoilstatus(e.target.value)}
-                    id="soil-status"
-                    placeholder="normal"
-                  />
-                </FormControl>
-                <FormControl>
-                  <FormLabel htmlFor="record-date">Record Date</FormLabel>
-                  <DatePicker
-                    selected={startDate}
-                    onChange={(date) => setStartDate(date.target.value)}
-                    id="record-date"
-                  />
-                </FormControl>
-                <Button type="submit" colorScheme="blue">
-                  Submit Record
-                </Button>
-              </form>
-            )}
+
+            <form
+              onSubmit={submitActivity}
+              className="flex flex-col gap-y-6 max-w-md my-6 bg-slate-50 rounded-md shadow-xl p-4 border-2"
+            >
+              <FormControl isRequired>
+                <FormLabel htmlFor="farm">Farm</FormLabel>
+                <Select
+                  value={recordOf}
+                  onChange={(e) => setRecordOf(e.target.value)}
+                  id="farm,"
+                  placeholder="Select farm"
+                >
+                  {farm.map((farm) => (
+                    <option key={farm.farmname} value={farm.farmname}>
+                      {farm.farmname}
+                    </option>
+                  ))}
+                </Select>
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel htmlFor="water-status">Water Status</FormLabel>
+                <Checkbox
+                  value={water}
+                  onChange={(e) => setWater((e.target.value = true))}
+                  id="water-status"
+                  size="lg"
+                >
+                  Water
+                </Checkbox>
+              </FormControl>
+              <FormControl>
+                <FormLabel htmlFor="fertilizer-status">
+                  Fertilizer Status
+                </FormLabel>
+                <Checkbox
+                  value={fertilizer}
+                  onChange={(e) => setfertilizer((e.target.value = true))}
+                  id="fertilizer-status"
+                  size="lg"
+                >
+                  Fertilizer
+                </Checkbox>
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel htmlFor="recorder-name">Record By</FormLabel>
+                <Input
+                  value={recname}
+                  onChange={(e) => setRecname(e.target.value)}
+                  id="recorder-name"
+                  placeholder="name"
+                />
+              </FormControl>
+              <FormControl isRequired>
+                <FormLabel htmlFor="soil-status">Soil Status</FormLabel>
+                <Input
+                  value={soilstatus}
+                  onChange={(e) => setSoilstatus(e.target.value)}
+                  id="soil-status"
+                  placeholder="normal"
+                />
+              </FormControl>
+              <FormControl>
+                <FormLabel htmlFor="record-date">Record Date</FormLabel>
+                <DatePicker
+                  selected={startDate}
+                  onChange={(date) => setStartDate(date.target.value)}
+                  id="record-date"
+                />
+              </FormControl>
+              <Button type="submit" colorScheme="blue">
+                Submit Record
+              </Button>
+            </form>
           </div>
         </div>
       ) : (

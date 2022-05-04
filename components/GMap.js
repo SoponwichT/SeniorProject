@@ -27,8 +27,10 @@ function getPaths(polygon) {
   return bounds;
 }
 
+
 const RegularMap = withScriptjs(
   withGoogleMap((props) => (
+    
     <GoogleMap
       defaultZoom={15}
       defaultCenter={{ lat: 14.069183, lng: 100.607452 }}
@@ -76,12 +78,11 @@ const RegularMap = withScriptjs(
         }}
       />
     </GoogleMap>
+    
   ))
 );
 
-const loadingElementStyle = { height: "150px", width: "150px" };
-const containerElementStyle = { height: "510px", width: "600px" };
-const mapElementStyle = { height: "100%" };
+
 
 export default function GoogleMaps(props) {
   return (
