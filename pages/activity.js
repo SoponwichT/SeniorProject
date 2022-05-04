@@ -42,6 +42,11 @@ const Myfarm = () => {
   const cancelRef = useRef();
   const message = "Today is an activity day! Please do the following tasks 1.Check soil quality 2.Fertilize 3.Water the tree";
   const date = Timestamp.now()
+ 
+  var timestamp = Math.round(new Date().getTime() / 1000); 
+  timestamp += 2592000; 
+  var datetime = new Date(timestamp*1000);
+  console.log(datetime);
 
   async function init() {
     const result = await getFarmInfomation();
@@ -73,7 +78,7 @@ const Myfarm = () => {
     );
     const addnoti = await addNotification(
         message,
-        date,
+        datetime,
         uid
     )
     console.log(response);

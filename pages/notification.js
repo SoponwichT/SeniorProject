@@ -1,17 +1,20 @@
 import Head from "next/head";
-import Noti from "../components/Notification"
+import Noti from "../components/Notification";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../services/all-provider";
 import { MdWarningAmber } from "react-icons/md";
 
 const Notification = () => {
   const { uid, isLoggedIn, getNotification } = useContext(AuthContext);
-  const [noti, setNoti] = useState([])
+  const [noti, setNoti] = useState([]);
 
   async function init() {
+    const now = new Date().getTime();
     const result = await getNotification();
-    const resultdata = result.filter((data) => data.uid === uid);
-    setNoti(resultdata)
+    const resultdata = result.filter(
+      (data) => data.uid === uid && now >= data.date.toMillis()
+    );
+    setNoti(resultdata);
     console.log(isLoggedIn);
     console.log(resultdata);
   }
@@ -25,7 +28,7 @@ const Notification = () => {
   }, [uid]);
 
   const notiElements = noti.map((doc) => {
-    return <Noti data={doc} init={init}/>;
+    return <Noti data={doc} init={init} />;
   });
 
   return (

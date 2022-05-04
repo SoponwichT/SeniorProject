@@ -62,7 +62,6 @@ function FarmInfo() {
     setAct(actdata);
     setAreacoord(farmcoord.farmarea);
     console.log(isLoggedIn);
-    
   }
 
   const deletefarm = async (e) => {
@@ -85,8 +84,11 @@ function FarmInfo() {
     return () => {};
   }, [uid, farmId]);
 
+  
+  
   function Date() {
     if (act) {
+      
       const date = act.createAt.toDate();
       return date.toGMTString();
     }
