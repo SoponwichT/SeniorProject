@@ -117,6 +117,7 @@ export default function AuthProvider({ children }) {
     recordBy,
     soilCheck,
     createAt,
+    other,
     uid
   ) {
     try {
@@ -127,6 +128,7 @@ export default function AuthProvider({ children }) {
         recordBy,
         soilCheck,
         createAt,
+        other,
         uid,
       });
       return ActivityStatus.success;

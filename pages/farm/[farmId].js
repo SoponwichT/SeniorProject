@@ -162,7 +162,7 @@ function FarmInfo() {
             </div>
           </div>
         </div>
-        <div className="mt-9">
+        <div className="mt-3">
           <div className="flex pb-3">
             <h1 className="text-3xl ml-8">Last Activity</h1>
             <Button
@@ -196,6 +196,10 @@ function FarmInfo() {
                       <Td isNumeric>{act.soilCheck}</Td>
                     </Tr>
                     <Tr>
+                      <Td>Other note:</Td>
+                      <Td isNumeric>{act.other} </Td>
+                    </Tr>
+                    <Tr>
                       <Td>Last Update:</Td>
                       <Td isNumeric>{Date()}</Td>
                     </Tr>
@@ -218,6 +222,10 @@ function FarmInfo() {
                     </Tr>
                     <Tr>
                       <Td>Soil Status:</Td>
+                      <Td isNumeric> - </Td>
+                    </Tr>
+                    <Tr>
+                      <Td>Other note:</Td>
                       <Td isNumeric> - </Td>
                     </Tr>
                     <Tr>

@@ -41,20 +41,23 @@ const Myfarm = () => {
   const [recname, setRecname] = useState("");
   const [recordOf, setRecordOf] = useState("");
   const [soilstatus, setSoilstatus] = useState("");
+  const [other, setOther] = useState("");
   const [loadingAlert, setLoadingAlert] = useState(false);
   const [loadingStatus, setLoadingStatus] = useState(0); // 0 = loading, 1 = success, 2 = error
   const cancelRef = useRef();
-  const message1 = "Today is a big activity day! Please do the following tasks 1.Check soil quality 2.Fertilize 3.Water the tree";
-  const message2 = "Today is a small activity day! Please do the following tasks 1.Water the tree 2.trim the tree";
-  const type1 = 0
-  const type2 = 1
+  const message1 =
+    "Today is a big activity day! Please do the following tasks 1.Check soil quality 2.Fertilize 3.Water the tree";
+  const message2 =
+    "Today is a small activity day! Please do the following tasks 1.Water the tree 2.trim the tree";
+  const type1 = 0;
+  const type2 = 1;
   var timestamp1 = Math.round(new Date().getTime() / 1000);
   // timestamp += 2592000; // 30days
   timestamp1 += 60;
   var datetime1 = new Date(timestamp1 * 1000);
   var timestamp2 = Math.round(new Date().getTime() / 1000);
   // timestamp2 += 1209600; // 14days
-  timestamp2 += 50
+  timestamp2 += 50;
   var datetime2 = new Date(timestamp2 * 1000);
 
   async function init() {
@@ -83,10 +86,23 @@ const Myfarm = () => {
       recname,
       soilstatus,
       startDate,
+      other,
       uid
     );
-    const addnoti1 = await addNotification(message1, datetime1, uid, recordOf, type1);
-    const addnoti2 = await addNotification(message2, datetime2, uid, recordOf, type2);
+    const addnoti1 = await addNotification(
+      message1,
+      datetime1,
+      uid,
+      recordOf,
+      type1
+    );
+    const addnoti2 = await addNotification(
+      message2,
+      datetime2,
+      uid,
+      recordOf,
+      type2
+    );
     console.log(response);
     if (response && addnoti1 && addnoti2 === ActivityStatus.success) {
       setLoadingStatus(1);
@@ -165,6 +181,15 @@ const Myfarm = () => {
                   onChange={(e) => setSoilstatus(e.target.value)}
                   id="soil-status"
                   placeholder="normal"
+                />
+              </FormControl>
+              <FormControl>
+                <FormLabel htmlFor="other">Other</FormLabel>
+                <Input
+                  value={other}
+                  onChange={(e) => setOther(e.target.value)}
+                  id="other"
+                  placeholder="Other note"
                 />
               </FormControl>
               <FormControl>
