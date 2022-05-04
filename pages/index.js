@@ -1,6 +1,4 @@
 import Head from "next/head";
-import Navbar from "../components/Navbar";
-import styles from "../styles/Home.module.css";
 import { AuthContext } from "../services/all-provider";
 import { useContext, useEffect, useState } from "react";
 import GoogleMaps from "../components/GMapold.js";
