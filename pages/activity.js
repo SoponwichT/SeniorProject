@@ -53,11 +53,11 @@ const Myfarm = () => {
   const type2 = 1;
   var timestamp1 = Math.round(new Date().getTime() / 1000);
   // timestamp += 2505600; // 29days
-  timestamp1 += 60;
+  timestamp1 += 40;
   var datetime1 = new Date(timestamp1 * 1000);
   var timestamp2 = Math.round(new Date().getTime() / 1000);
   // timestamp2 += 1209600; // 14days
-  timestamp2 += 50;
+  timestamp2 += 30;
   var datetime2 = new Date(timestamp2 * 1000);
 
   async function init() {
