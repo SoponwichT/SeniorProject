@@ -52,7 +52,7 @@ const Myfarm = () => {
   const type1 = 0;
   const type2 = 1;
   var timestamp1 = Math.round(new Date().getTime() / 1000);
-  timestamp += 2505600; // 29days
+  timestamp1 += 2505600; // 29days
   // timestamp1 += 20;
   var datetime1 = new Date(timestamp1 * 1000);
   var timestamp2 = Math.round(new Date().getTime() / 1000);
